@@ -248,7 +248,7 @@ input:focus {
   color: #bababa;
 }
 .text-red-500 {
-  color: #f46363;
+  color: #f46363 !important;
 }
 .text-gray-500 {
   color: #6b7280;
@@ -264,6 +264,9 @@ input:focus {
 }
 .text-green {
   color: #9dc175;
+}
+.accent-green {
+  accent-color: #9dc175 !important;
 }
 .invalid-input {
   border: 1px solid var(--system-danger-500-base, #f46363);

@@ -12,7 +12,7 @@ class ApiServer {
     let headers = {};
     if (token) {
       headers = {
-        "x-access-token": token,
+        authorization: "Bearer " + token,
       };
     }
     const options =
