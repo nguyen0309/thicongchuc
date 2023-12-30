@@ -16,7 +16,7 @@ useServerSeoMeta({
 </script>
 
 <template>
-  <div class="app">
+  <div class="app h-screen">
     <Html>
       <Head>
         <Title>Thi Công Chức</Title>

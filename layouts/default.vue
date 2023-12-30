@@ -1,5 +1,11 @@
 <script setup>
+import { useUsersService } from "@/services/users";
+import { useAuthService } from "@/services/auth";
+
 const showMenu = ref(false);
+const user = ref({});
+const loading = ref(false);
+const router = useRouter();
 
 const hoverShowMenu = () => {
   showMenu.value = true;
@@ -9,9 +15,35 @@ const hideMenu = () => {
     showMenu.value = false;
   }, 1000);
 };
+const getUser = async () => {
+  try {
+    loading.value = true;
+    const res = await useUsersService().get();
+    if (res) {
+      user.value = res;
+      console.log(user.value);
+      console.log(Object.keys(user.value).length);
+    }
+    loading.value = false;
+  } catch (e) {
+    console.log(e);
+  }
+};
+const logout = async () => {
+  try {
+    await useAuthService().logout();
+    router.push("/");
+  } catch (e) {
+    console.log(e);
+  }
+};
+onMounted(() => {
+  if (process.client && localStorage.getItem("congchuc24h_token")) getUser();
+});
 </script>
 <template>
-  <div class="relative">
+  <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
+  <div v-else class="relative h-screen">
     <a href="tel:0705908789" class="icon-zalo">
       <img class="w-full h-full" src="@/assets/img/zalo.svg" alt="" />
     </a>
@@ -50,9 +82,14 @@ const hideMenu = () => {
             </li>
             <li class="show-on-mobile"><a class="title" href="dang-nhap">Đăng nhập</a></li>
           </ul>
-          <div class="actions">
-            <a href="dang-ky" class="action-link">Đăng ký</a>
-            <a href="dang-nhap" class="btn action-btn">Đăng nhập</a>
+          <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
+            Xin chào, {{ user.name }}! <span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
+          </div>
+          <div v-else>
+            <div class="actions">
+              <a href="dang-ky" class="action-link">Đăng ký</a>
+              <a href="dang-nhap" class="btn action-btn">Đăng nhập</a>
+            </div>
           </div>
         </nav>
       </div>
@@ -80,8 +117,14 @@ const hideMenu = () => {
           </li>
           <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
           <!-- <li><a class="title" href="gioi-thieu">Giới thiệu</a></li> -->
-          <li><a class="title" href="dang-ky">Đăng ký</a></li>
-          <li><a class="title" href="dang-nhap">Đăng nhập</a></li>
+          <div v-if="Object.keys(user).length > 0 && user.name">
+            <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
+            <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
+          </div>
+          <div v-else>
+            <li><a class="title" href="dang-ky">Đăng ký</a></li>
+            <li><a class="title" href="dang-nhap">Đăng nhập</a></li>
+          </div>
         </ul>
       </div>
     </header>
@@ -98,7 +141,7 @@ const hideMenu = () => {
   margin-right: auto;
 }
 .h-content {
-  height: calc(100vh - 66px);
+  height: calc(100vh - 65px);
   overflow-y: auto;
 }
 
@@ -138,6 +181,7 @@ const hideMenu = () => {
   display: flex;
   align-items: center;
   padding: 12px 0;
+  height: 64px;
 }
 
 .navbar ul {
@@ -146,6 +190,9 @@ const hideMenu = () => {
 }
 
 .navbar .actions {
+  margin-left: auto;
+}
+.navbar .user-name {
   margin-left: auto;
 }
 
@@ -166,6 +213,15 @@ const hideMenu = () => {
 }
 
 .icon-zalo {
+  width: 64px;
+  height: 64px;
+  position: fixed;
+  right: 30px;
+  bottom: 120px;
+  z-index: 5;
+  cursor: pointer;
+}
+.icon-facebook {
   width: 64px;
   height: 64px;
   position: fixed;
@@ -229,7 +285,7 @@ const hideMenu = () => {
     position: fixed;
     width: 300px;
     background: #fff;
-    z-index: 2;
+    z-index: 10;
     padding: 40px;
     transform: translateX(-100%);
     transition: 0.5s ease;
@@ -301,6 +357,12 @@ const hideMenu = () => {
     left: 260px;
   }
 }
+@media screen and (max-width: 480px) {
+  .navbar .user-name {
+    display: none;
+  }
+}
+
 .menu-title:hover {
   font-weight: 700;
 }

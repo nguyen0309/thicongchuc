@@ -46,7 +46,7 @@ export function useAuthService() {
       });
   };
   const logout = async () => {
-    if (process.client) localStorage.removeItem("sg_token");
+    if (process.client) localStorage.removeItem("congchuc24h_token");
     return true;
   };
   return {

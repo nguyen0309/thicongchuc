@@ -2,17 +2,61 @@
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import Footer from "../components/footer.vue";
+import { useCatgoriesService } from "@/services/categories";
 
 const currentSlide = ref(0);
-
+const listCategories = ref(0);
+const review = ref([
+  {
+    review: "Cảm ơn mọi người trong thời gian qua đã chỉ bảo và giúp đỡ tôi rất nhiều. Chúc mọi người đạt được nhiều thành công.",
+    name: "Nguyễn Hương Giang",
+    work: "Kế toán Hải quan Cà Mau",
+  },
+  {
+    review:
+      "Tôi thật may mắn khi được học với mọi người, những con người hòa đồng, dễ thương và nhiệt tình. Tôi đã được mọi người giúp đỡ nhiều và cũng đã học hỏi được rất nhiều. Cảm ơn mọi người rất nhiều!",
+    name: "Lê Đình Bắc",
+    work: "Kho bạc Nhà nước tỉnh Bắc Giang",
+  },
+  {
+    review:
+      "Được biết tới website,  nhận được sự tư vấn, hỗ trợ về kiến thức của website khi đi thi là một may mắn đối với em.Cảm ơn mọi người rất nhiều!",
+    name: "Lê Minh Thư",
+    work: "Kho bạc Nhà nước tỉnh Long An",
+  },
+]);
+const tables = ref([
+  { name: "kyluc", score: 10, time: "00:10:58" },
+  { name: "Lê Thị Khoa", score: 10, time: "00:11:35" },
+  { name: "sieunhan_zzz", score: 10, time: "00:13:53" },
+  { name: "account", score: 10, time: "00:14:42" },
+  { name: "thuykhoa", score: 10, time: "00:15:24" },
+  { name: "Nguyễn Lê Na", score: 10, time: "00:17:24" },
+  { name: "checkzzz@@@", score: 10, time: "00:18:24" },
+  { name: "Đinh Minh Thư", score: 10, time: "00:19:24" },
+  { name: "meowmeow", score: 10, time: "00:20:43" },
+  { name: "La Thị Hà", score: 10, time: "00:21:53" },
+  { name: "sweet@@@", score: 10, time: "00:22:21" },
+]);
 const next = () => {
   currentSlide.value++;
 };
 const prev = () => {
   currentSlide.value--;
 };
-
-onMounted(() => {});
+const getCategories = async () => {
+  try {
+    const res = await useCatgoriesService().list();
+    if (res) {
+      listCategories.value = res.list;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+onMounted(() => {
+  getCategories();
+});
 </script>
 <template>
   <NuxtLayout>
@@ -27,234 +71,101 @@ onMounted(() => {});
             </Slide>
           </Carousel>
 
-          <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev"><img src="@/assets/img/arrow-left.png" alt="" /></div>
-          <div class="absolute arrow-slide cursor-pointer right-arrow" @click="next"><img src="@/assets/img/arrow-right.png" alt="" /></div>
-        </div>
-      </div>
-      <div id="features" class="featured">
-        <div class="content">
-          <header class="flex items-center justify-between">
-            <h2 class="sub-title">Đề thi <span class="text-yellow"> nổi bật</span></h2>
-            <a href="#!" class="link">
-              <span>Xem thêm</span>
-              <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-            </a>
-          </header>
-
-          <div class="list">
-            <div class="item" v-for="i in 6" :key="i">
-              <a href="#!">
-                <img src="@/assets/img/featured-1.jpg" alt="Nikko Apartments" class="thumb" />
-              </a>
-              <div class="body">
-                <h3 class="title mb-2">
-                  <a href="#!">Quyết định 89</a>
-                </h3>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
-                    <span class="label">30 câu hỏi</span>
-                  </div>
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/both.svg" alt="" class="icon" /> -->
-                    <span class="label text-red-700">300.000đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev">
+            <img src="@/assets/img/arrow-left.png" alt="" />
           </div>
-
-          <div class="view-all show-on-mobile">
-            <a href="#!" class="btn">Xem thêm</a>
+          <div class="absolute arrow-slide cursor-pointer right-arrow" @click="next">
+            <img src="@/assets/img/arrow-right.png" alt="" />
           </div>
         </div>
       </div>
       <div id="features" class="featured">
         <div class="content">
           <header class="flex items-center justify-between">
-            <h2 class="sub-title">Thuế</h2>
-            <a href="#!" class="link">
-              <span>Xem thêm</span>
-              <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-            </a>
+            <h2 class="sub-title">Thi kiến thức chung</h2>
           </header>
-
           <div class="list">
-            <div class="item" v-for="i in 6" :key="i">
-              <a href="#!">
+            <div class="item" v-for="i in listCategories" :key="i">
+              <a :href="`/${i.slug.slug}`">
                 <img src="@/assets/img/featured-1.jpg" alt="Nikko Apartments" class="thumb" />
               </a>
               <div class="body">
                 <h3 class="title mb-2">
-                  <a href="#!">Quyết định 89</a>
+                  <a>{{ i.title }}</a>
                 </h3>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center">
                     <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
-                    <span class="label">30 câu hỏi</span>
-                  </div>
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/both.svg" alt="" class="icon" /> -->
-                    <span class="label text-red-700">300.000đ</span>
+                    <span class="label">{{ i.slug?.slug == "tieng-anh" ? 30 : 60 }} câu hỏi</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="view-all show-on-mobile">
-            <a href="#!" class="btn">Xem thêm</a>
+        </div>
+      </div>
+      <div class="working features p-12">
+        <div class="z-10">
+          <header class="flex items-center justify-center mb-12">
+            <h2 class="sub-title text-white text-center">Nhận xét của <span class="text-yellow">học viên</span></h2>
+          </header>
+          <div class="carousel flex items-center justify-around">
+            <div v-for="(i, index) in review" :key="index" class="mb-6">
+              <div class="z-10 carousel__item h-250 w-300 thanks bg-white mb-8">
+                <div class="w-full h-full p-12">
+                  <div class="flex w-full justify-center mb-5">
+                    <img v-if="index % 2 == 0" class="w-48" src="@/assets/img/quotes.png" alt="" />
+                    <img v-else class="w-48" src="@/assets/img/quotes_2.png" alt="" />
+                  </div>
+                  <div class="text-justify fs-16 fw-500 text-black-700 line-clamp w-full">
+                    {{ i.review }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-center flex-col">
+                <img class="w-48 br-50 mb-4 white-border" :src="`_nuxt/assets/img/avatar_${index}.png`" alt="" />
+                <div class="fs-18 text-white fw-400 mb-4">{{ i.name }}</div>
+                <div class="fs-14 text-white fw-400">{{ i.work }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- Guides -->
-      <!-- <div id="services" class="guides">
-        <div class="content">
-          <h2 class="sub-title">How its works?</h2>
-          <p class="desc">Everything you need to know when you're looking to buy, rent, or sell - all in one place.</p>
-          <ul class="list-guide">
-            <li class="guide-item">
-              <img src="@/assets/img/buyer.svg" alt="Buyer" class="icon" />
-              <h3 class="title">Buyer Guides</h3>
-              <a href="#!" class="link">
-                <span>How to buy</span>
-                <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-              </a>
-            </li>
-            <li class="guide-item">
-              <img src="@/assets/img/renter.svg" alt="Renter" class="icon" />
-              <h3 class="title">Renter Guides</h3>
-              <a href="#!" class="link">
-                <span>How to rent</span>
-                <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-              </a>
-            </li>
-            <li class="guide-item">
-              <img src="@/assets/img/seller.svg" alt="Seller" class="icon" />
-              <h3 class="title">Seller Guides</h3>
-              <a href="#!" class="link">
-                <span>How to sell</span>
-                <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-              </a>
-            </li>
-          </ul>
-
-          <div class="guide-cta">
-            <a href="#!" class="btn">Sell Full Guidelines</a>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- Featured -->
       <div id="features" class="featured">
         <div class="content">
-          <header class="flex items-center justify-between">
-            <h2 class="sub-title">Bảo hiểm xã hội</h2>
-            <a href="#!" class="link">
-              <span>Xem thêm</span>
-              <img src="@/assets/img/arrow-right.svg" alt="Arrow right" class="arrow" />
-            </a>
+          <header class="flex items-center justify-between mb-8">
+            <h2 class="sub-title">Bảng xếp hạng</h2>
           </header>
-
-          <div class="list">
-            <div class="item" v-for="i in 6" :key="i">
-              <a href="#!">
-                <img src="@/assets/img/featured-1.jpg" alt="Nikko Apartments" class="thumb" />
-              </a>
-              <div class="body">
-                <h3 class="title mb-2">
-                  <a href="#!">Quyết định 89</a>
-                </h3>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
-                    <span class="label">30 câu hỏi</span>
-                  </div>
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/both.svg" alt="" class="icon" /> -->
-                    <span class="label text-red-700">300.000đ</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="view-all show-on-mobile">
-            <a href="#!" class="btn">Xem thêm</a>
-          </div>
+          <table>
+            <tr>
+              <th>STT</th>
+              <th>Tên</th>
+              <th>Điểm</th>
+              <th>Thời gian</th>
+            </tr>
+            <tr v-for="(i, index) in tables" :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ i.name }}</td>
+              <td>{{ i.score }}</td>
+              <td>{{ i.time }}</td>
+            </tr>
+          </table>
         </div>
       </div>
-
-      <!-- Stats -->
-      <div id="resources" class="stats">
-        <div class="content">
-          <!-- <div class="row">
-            <div class="img-block">
-              <img class="image" src="@/assets/img/stats-img.jpg" alt="You’ve found a neighborhood you love." />
-              <div class="stats-trend">
-                <div class="row">
-                  <strong class="value">40,000+</strong>
-                  <img src="@/assets/img/arrow-trend-up.svg" alt="" class="icon" />
-                </div>
-                <p class="desc">By avarage for 2 bedroom apments in San Francisco, CA</p>
-                <div class="separate"></div>
-                <div class="avatar-block">
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-1.jpg" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-2.jpg" alt="" class="avatar" />
-                  </div>
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-3.jpg" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-4.webp" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-5.jpg" alt="" class="avatar" />
-                    <div class="avatar" style="--bg-color: #1f3bb1">R</div>
-                  </div>
-                  <div class="avatar-group">
-                    <div class="avatar" style="--bg-color: #24d6d9">FJ</div>
-                    <img src="@/assets/img/avatar-6.jpg" alt="" class="avatar" />
-                    <div class="avatar" style="--bg-color: #f8c120">S</div>
-                  </div>
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-7.jpeg" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-8.jpg" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-9.jpg" alt="" class="avatar" />
-                    <div class="avatar" style="--bg-color: #f97f6b">JJ</div>
-                  </div>
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-10.jpg" alt="" class="avatar" />
-                    <div class="avatar" style="--bg-color: #73a242">QV</div>
-                  </div>
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-11.jpg" alt="" class="avatar" />
-                    <img src="@/assets/img/avatar-12.jpg" alt="" class="avatar" />
-                  </div>
-                  <div class="avatar-group">
-                    <img src="@/assets/img/avatar-13.jfif" alt="" class="avatar" />
-                    <div class="avatar" style="--bg-color: #1f3bb0">UI</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="info">
-              <h2 class="sub-title">You’ve found a neighborhood you love.</h2>
-              <p class="desc">
-                When you own a home, you’re committing to living in one location for a while. In a recent Trulia survey, we found that five out of six
-                respondents said finding the right neighborhood
-              </p>
-            </div>
-          </div> -->
+      <div id="resources" class="stats p-12">
+        <div class="content z-10">
           <div class="row row-qty">
             <div class="qty-item text-center">
-              <strong class="qty">1500+</strong>
-              <p class="qty-desc">Người đã mua đề thi</p>
+              <strong class="qty text-white">1500+</strong>
+              <p class="qty-desc text-white">Người đã mua đề thi</p>
             </div>
             <div class="qty-item text-center">
-              <strong class="qty">5,000+</strong>
-              <p class="qty-desc">Đã tham gia cùng chúng tôi</p>
+              <strong class="qty text-white">5,000+</strong>
+              <p class="qty-desc text-white">Đã tham gia cùng chúng tôi</p>
             </div>
             <div class="qty-item text-center">
-              <strong class="qty">1000+</strong>
-              <p class="qty-desc">Người đã đậu và có việc làm</p>
+              <strong class="qty text-white">1000+</strong>
+              <p class="qty-desc text-white">Người đã đậu và có việc làm</p>
             </div>
           </div>
         </div>
@@ -271,25 +182,12 @@ onMounted(() => {});
   margin-right: auto;
 }
 
-.btn {
-  display: inline-block;
-  min-width: 98px;
-  padding: 18px 16px;
-  background: var(--primary-color);
-  border-radius: 12px;
-  font-weight: 500;
-  font-size: 1.4rem;
-  text-align: center;
-  color: #ffffff;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
 .line-clamp {
+  // white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: var(--line-clamp, 2);
+  -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -410,8 +308,19 @@ onMounted(() => {});
 
 /* Stats */
 .stats {
+  position: relative;
   // margin-top: 75px;
   // padding: 50px 0;
+}
+.stats::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #1f0e00eb;
 }
 
 .stats .content {
@@ -452,14 +361,12 @@ onMounted(() => {});
 .stats .qty {
   font-weight: 600;
   font-size: 6.4rem;
-  color: #000000;
 }
 
 .stats .qty-desc {
   margin-top: 24px;
   font-weight: 500;
   font-size: 1.8rem;
-  color: #7b8087;
 }
 
 .h-420 {
@@ -481,13 +388,32 @@ onMounted(() => {});
 .right-arrow {
   right: 20px;
 }
-@media screen and (min-width: 992px) {
-  .show-on-mobile {
-    display: none;
-  }
+.working {
+  width: calc(100vw - 5px);
+  // height: 500px;
+  position: relative;
+  // background: transparent url(@/assets/img/working.png) no-repeat center;
+}
+.working::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #1f0e00eb;
+}
+.working .sub-title {
+  font-weight: 600;
+  font-size: 3.5rem;
+  line-height: 1;
 }
 
 @media screen and (max-width: 991px) {
+  .carousel {
+    flex-direction: column !important;
+  }
   .featured .list {
     grid-template-columns: 1fr 1fr;
   }
@@ -548,5 +474,29 @@ onMounted(() => {});
     align-items: center;
     row-gap: 60px;
   }
+}
+.w-300 {
+  width: 300px;
+}
+.h-250 {
+  height: 250px;
+}
+.thanks {
+  border-radius: 36px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 </style>

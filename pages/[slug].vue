@@ -40,7 +40,8 @@ onMounted(() => {
   <NuxtLayout>
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
     <div v-else class="wrap-content h-full p-12">
-      <div class="block p-6" v-if="!list.is_access_topic">
+      <div class="contact cursor-pointer" v-if="list.is_access_topic" @click="generateExam(list.slug.slug)">Vào thi!</div>
+      <div class="block p-6" v-else>
         <div class="fs-36 fw-600 text-black-700 mb-8">Thi thử trắc nghiệm Kiến thức chung {{ list.title }}</div>
         <div class="fs-18 leading-5 fw-400 text-red-700 alert p-6 flex gap-2 items-center mb-8">
           <img src="@/assets/img/error.png" alt="" />
@@ -49,7 +50,6 @@ onMounted(() => {
         <div class="leading-6 fs-16 fw-700 text-blue underline mb-8">Đăng ký mua đề thi với giá xxx/tháng!</div>
         <a :href="`tel:${config.phone}`" class="contact">Liên hệ Zalo: {{ config.phone }}</a>
       </div>
-      <div class="contact cursor-pointer" v-else @click="generateExam(list.slug.slug)">Vào thi!</div>
     </div>
   </NuxtLayout>
 </template>

@@ -10,11 +10,11 @@ import config from "@/config";
           <ul class="list">
             <li class="item flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/facebook.svg" alt="" />
-              <a class="text-black-700" href="https://www.facebook.com/">test123@gmail.com</a>
+              <a class="text-black-700 fw-700" href="https://www.facebook.com/hoccungcs?locale=vi_VN">Fanpage hỗ trợ</a>
             </li>
             <li class="item flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/zalo.svg" alt="" />
-              <a class="text-black-700" href="mailto::trungnguyen030999@gmail.com">test123@gmail.com</a>
+              <a class="text-black-700" href="mailto::trungnguyen030999@gmail.com">{{ config.phone }}</a>
             </li>
           </ul>
         </div>
@@ -23,11 +23,11 @@ import config from "@/config";
           <ul class="list">
             <li class="flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/telephone.png" alt="" />
-              <a class="text-black-700" :href="`tel:${config.phone}`">(+84) {{ config.phone }} (24/7)</a>
+              <a class="text-black-700" :href="`tel:${config.phone}`">{{ config.phone }}</a>
             </li>
             <li class="item flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/mail.png" alt="" />
-              <a class="text-black-700" href="mailto::trungnguyen030999@gmail.com">test123@gmail.com</a>
+              <a class="text-black-700" href="`mailto::${config.mail}`">{{ config.mail }}</a>
             </li>
           </ul>
         </div>
