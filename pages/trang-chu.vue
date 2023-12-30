@@ -61,7 +61,7 @@ onMounted(() => {
 <template>
   <NuxtLayout>
     <main>
-      <div class="hero-wrap p-10 flex items-center gap-5 justify-center">
+      <!-- <div class="hero-wrap p-10 flex items-center gap-5 justify-center">
         <div class="mb-2 relative rounded-lg lg:w-4/5">
           <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
             <Slide v-for="i in 10" :key="i">
@@ -78,7 +78,7 @@ onMounted(() => {
             <img src="@/assets/img/arrow-right.png" alt="" />
           </div>
         </div>
-      </div>
+      </div> -->
       <div id="features" class="featured">
         <div class="content">
           <header class="flex items-center justify-between">
