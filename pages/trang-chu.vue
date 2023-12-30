@@ -1,7 +1,7 @@
 <script setup>
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
-import Footer from "@/components/footer.vue";
+import Footer from "../components/footer.vue";
 
 const currentSlide = ref(0);
 
@@ -260,7 +260,7 @@ onMounted(() => {});
         </div>
       </div>
     </main>
-    <footer></footer>
+    <Footer></Footer>
   </NuxtLayout>
 </template>
 <style lang="scss" scoped>

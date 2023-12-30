@@ -42,7 +42,7 @@ import config from "@/config";
 <style scoped>
 .footer {
   margin-top: 55px;
-  padding: 50px 0 58px;
+  padding: 50px 48px 58px;
 }
 
 .footer .row {

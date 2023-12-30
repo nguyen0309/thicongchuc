@@ -6,8 +6,8 @@ export function useExamsService() {
       return res;
     });
   };
-  const start = async (id) => {
-    return api.fetch(`exam/${id}/start`, {}, "post").then((res) => {
+  const start = async (id, page, limit) => {
+    return api.fetch(`exam/${id}/start`, { page, limit }, "post").then((res) => {
       return res;
     });
   };

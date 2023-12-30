@@ -1,7 +1,4 @@
 <script setup>
-import { Carousel, Navigation, Slide } from "vue3-carousel";
-import "vue3-carousel/dist/carousel.css";
-
 const showMenu = ref(false);
 
 const hoverShowMenu = () => {
@@ -33,21 +30,21 @@ const hideMenu = () => {
             <!-- <div class="logo fs-36 leading-8 text-black-700 fw-800">Thicongchuc24h</div> -->
           </a>
           <ul id="pc-nav">
-            <li><a class="title" href="#">Trang chủ</a></li>
+            <li><a class="title" href="/trang-chu">Trang chủ</a></li>
             <li class="relative" @mouseleave="hideMenu">
               <a class="title" @mouseover="hoverShowMenu">Thi</a>
               <div class="block-menu flex flex-col" v-if="showMenu">
-                <a href="thi-trac-nghiem" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
-                <a class="p-4 cursor-pointer menu-title">Hải quan</a>
-                <a class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
-                <a class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
-                <a class="p-4 cursor-pointer menu-title">Thống kê</a>
-                <a class="p-4 cursor-pointer menu-title">Thuế</a>
-                <a class="p-4 cursor-pointer menu-title">Tiếng anh</a>
+                <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
+                <a href="/hai-quan" class="p-4 cursor-pointer menu-title">Hải quan</a>
+                <a href="/kho-bac-nha-nuoc" class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
+                <a href="/ngan-hang-nha-nuoc" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
+                <a href="/thong-ke" class="p-4 cursor-pointer menu-title">Thống kê</a>
+                <a href="/thue" class="p-4 cursor-pointer menu-title">Thuế</a>
+                <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
             </li>
-            <li><a class="title" href="tai-lieu">Tài liệu</a></li>
-            <li><a class="title" href="gioi-thieu">Giới thiệu</a></li>
+            <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
+            <!-- <li><a class="title" href="gioi-thieu">Giới thiệu</a></li> -->
             <li class="show-on-mobile separate">
               <a class="title" href="dang-ky">Đăng ký</a>
             </li>
@@ -68,21 +65,21 @@ const hideMenu = () => {
           <!-- <div class="fs-36 leading-8 text-black-700 fw-800">Thicongchuc24h</div> -->
         </a>
         <ul id="mobile-nav">
-          <li><a class="title" href="#">Trang chủ</a></li>
+          <li><a class="title" href="/trang-chu">Trang chủ</a></li>
           <li class="relative" @mouseover="hoverShowMenu" @mouseleave="hideMenu">
             <a class="title">Thi</a>
             <div class="block-menu flex flex-col" v-if="showMenu">
-              <a href="thi-trac-nghiem" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
-              <a class="p-4 cursor-pointer menu-title">Hải quan</a>
-              <a class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
-              <a class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
-              <a class="p-4 cursor-pointer menu-title">Thống kê</a>
-              <a class="p-4 cursor-pointer menu-title">Thuế</a>
-              <a class="p-4 cursor-pointer menu-title">Tiếng anh</a>
+              <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
+              <a href="/hai-quan" class="p-4 cursor-pointer menu-title">Hải quan</a>
+              <a href="/kho-bac-nha-nuoc" class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
+              <a href="/ngan-hang-nha-nuoc" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
+              <a href="/thong-ke" class="p-4 cursor-pointer menu-title">Thống kê</a>
+              <a href="/thue" class="p-4 cursor-pointer menu-title">Thuế</a>
+              <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <li><a class="title" href="tai-lieu">Tài liệu</a></li>
-          <li><a class="title" href="gioi-thieu">Giới thiệu</a></li>
+          <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
+          <!-- <li><a class="title" href="gioi-thieu">Giới thiệu</a></li> -->
           <li><a class="title" href="dang-ky">Đăng ký</a></li>
           <li><a class="title" href="dang-nhap">Đăng nhập</a></li>
         </ul>
@@ -101,8 +98,8 @@ const hideMenu = () => {
   margin-right: auto;
 }
 .h-content {
-  // height: calc(100vh - 66px);
-  // overflow-y: auto;
+  height: calc(100vh - 66px);
+  overflow-y: auto;
 }
 
 .btn {
