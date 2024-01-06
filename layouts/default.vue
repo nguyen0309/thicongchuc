@@ -75,21 +75,15 @@ onMounted(() => {
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
             </li>
-            <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
-            <!-- <li><a class="title" href="gioi-thieu">Giới thiệu</a></li> -->
-            <li class="show-on-mobile separate">
-              <a class="title" href="dang-ky">Đăng ký</a>
-            </li>
-            <li class="show-on-mobile"><a class="title" href="dang-nhap">Đăng nhập</a></li>
+            <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+            <li><a class="title" href="tin-tuc">Tin tức</a></li>
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
             Xin chào, {{ user.name }}! <span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
           </div>
-          <div v-else>
-            <div class="actions">
-              <a href="dang-ky" class="action-link">Đăng ký</a>
-              <a href="dang-nhap" class="btn action-btn">Đăng nhập</a>
-            </div>
+          <div v-else class="actions">
+            <a href="dang-ky" class="action-link">Đăng ký</a>
+            <a href="dang-nhap" class="btn action-btn">Đăng nhập</a>
           </div>
         </nav>
       </div>
@@ -115,8 +109,8 @@ onMounted(() => {
               <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
-          <!-- <li><a class="title" href="gioi-thieu">Giới thiệu</a></li> -->
+          <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+          <li><a class="title" href="tin-tuc">Tin tức</a></li>
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>

@@ -7,9 +7,9 @@ export default defineNuxtConfig({
       ]
     }
   },
-  devServer: {
-    port: 3001,
-  },
+  // devServer: {
+  //   port: 3001,
+  // },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   postcss: {

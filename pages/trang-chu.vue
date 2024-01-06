@@ -123,7 +123,7 @@ onMounted(() => {
                 </div>
               </div>
               <div class="flex items-center justify-center flex-col">
-                <img class="w-48 br-50 mb-4 white-border" :src="`_nuxt/assets/img/avatar_${index}.png`" alt="" />
+                <img class="w-48 br-50 mb-4 white-border" :src="`/avatar/avatar_${index}.png`" alt="" />
                 <div class="fs-18 text-white fw-400 mb-4">{{ i.name }}</div>
                 <div class="fs-14 text-white fw-400">{{ i.work }}</div>
               </div>
@@ -132,25 +132,27 @@ onMounted(() => {
         </div>
       </div>
       <div id="features" class="featured">
-        <div class="content">
-          <header class="flex items-center justify-between mb-8">
-            <h2 class="sub-title">Bảng xếp hạng</h2>
-          </header>
-          <table>
-            <tr>
-              <th>STT</th>
-              <th>Tên</th>
-              <th>Điểm</th>
-              <th>Thời gian</th>
-            </tr>
-            <tr v-for="(i, index) in tables" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td>{{ i.name }}</td>
-              <td>{{ i.score }}</td>
-              <td>{{ i.time }}</td>
-            </tr>
-          </table>
-        </div>
+        <ClientOnly>
+          <div class="content">
+            <header class="flex items-center justify-between mb-8">
+              <h2 class="sub-title">Bảng xếp hạng</h2>
+            </header>
+            <table>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Điểm</th>
+                <th>Thời gian</th>
+              </tr>
+              <tr v-for="(i, index) in tables" :key="index">
+                <td>{{ index + 1 }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.score }}</td>
+                <td>{{ i.time }}</td>
+              </tr>
+            </table>
+          </div>
+        </ClientOnly>
       </div>
       <div id="resources" class="stats p-12">
         <div class="content z-10">
