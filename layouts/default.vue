@@ -75,7 +75,7 @@ onMounted(() => {
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
             </li>
-            <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+            <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
             <li><a class="title" href="tin-tuc">Tin tức</a></li>
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
@@ -109,7 +109,7 @@ onMounted(() => {
               <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+          <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
           <li><a class="title" href="tin-tuc">Tin tức</a></li>
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>

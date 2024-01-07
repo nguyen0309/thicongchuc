@@ -247,6 +247,7 @@ input:focus {
 .text-black-350 {
   color: #bababa;
 }
+
 .text-red-500 {
   color: #f46363 !important;
 }
@@ -319,6 +320,9 @@ input:focus {
 .fs-36 {
   font-size: 36px;
 }
+.fs-52 {
+  font-size: 52px;
+}
 .lh-18 {
   line-height: 18px;
 }
@@ -357,4 +361,8 @@ input:focus {
 }
 .br-50 {
   border-radius: 50%;
+}
+.py-50 {
+  padding-top: 50px;
+  padding-bottom: 50px;
 }

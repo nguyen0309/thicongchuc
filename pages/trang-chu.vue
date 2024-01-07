@@ -3,9 +3,11 @@ import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import Footer from "../components/footer.vue";
 import { useCatgoriesService } from "@/services/categories";
+import { useSlugService } from "@/services/slug";
 
 const currentSlide = ref(0);
 const listCategories = ref(0);
+const listPost = ref([]);
 const review = ref([
   {
     review: "Cảm ơn mọi người trong thời gian qua đã chỉ bảo và giúp đỡ tôi rất nhiều. Chúc mọi người đạt được nhiều thành công.",
@@ -38,6 +40,34 @@ const tables = ref([
   { name: "La Thị Hà", score: 10, time: "00:21:53" },
   { name: "sweet@@@", score: 10, time: "00:22:21" },
 ]);
+
+const counters = {
+  counter_1: { current: 0, target: 1000, increment: 20 },
+  counter_2: { current: 0, target: 10000, increment: 200 },
+  counter_3: { current: 0, target: 5000, increment: 100 },
+};
+
+const updateCounter = (counterId) => {
+  if (process.client) {
+    let counterElement = document.getElementById(counterId);
+    counterElement.textContent = counters[counterId].current + "+";
+  }
+};
+
+const animateCounter = (counterId) => {
+  const counter = counters[counterId];
+  const animationInterval = setInterval(() => {
+    counter.current += counter.increment;
+    updateCounter(counterId);
+
+    if (counter.current >= counter.target) {
+      counter.current = counter.target;
+      updateCounter(counterId);
+      clearInterval(animationInterval);
+    }
+  }, 50);
+};
+
 const next = () => {
   currentSlide.value++;
 };
@@ -46,7 +76,7 @@ const prev = () => {
 };
 const getCategories = async () => {
   try {
-    const res = await useCatgoriesService().list();
+    const res = await useCatgoriesService().list({ types: ["exam"] });
     if (res) {
       listCategories.value = res.list;
     }
@@ -54,20 +84,50 @@ const getCategories = async () => {
     console.log(e);
   }
 };
+const getPost = async () => {
+  try {
+    // loading.value = true;
+    const res = await useSlugService().get("tin-tuc");
+    listPost.value = res.list;
+    // loading.value = false;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 onMounted(() => {
   getCategories();
+  getPost();
+  animateCounter("counter_1");
+  animateCounter("counter_2");
+  animateCounter("counter_3");
 });
+// onUnmounted(() => {
+//   if (process.client) {
+//     window.removeEventListener("scroll", handleScroll());
+//   }
+// });
 </script>
 <template>
   <NuxtLayout>
     <main>
-      <!-- <div class="hero-wrap p-10 flex items-center gap-5 justify-center">
+      <div class="hero-wrap p-12 flex items-center gap-5 justify-center mt-12">
         <div class="mb-2 relative rounded-lg lg:w-4/5">
           <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
-            <Slide v-for="i in 10" :key="i">
-              <div class="carousel__item h-420 rounded-lg">
-                <img class="h-420" src="@/assets/img/banner.png" alt="Besnik." />
-              </div>
+            <Slide v-for="i in listPost" :key="i" >
+              <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
+                <div class="h-420 w-full rounded-lg">
+                  <img class="h-420 w-full" :src="i.img" alt="Besnik." />
+                </div>
+                <div class="body-post">
+                  <div class="post-title text-left fs-24 mb-2 line-clamp-1">
+                    {{ i.title }}
+                  </div>
+                  <div class="flex items-center">
+                    <span class="label text-left line-clamp-3">{{ i.description }}</span>
+                  </div>
+                </div>
+              </a>
             </Slide>
           </Carousel>
 
@@ -78,7 +138,7 @@ onMounted(() => {
             <img src="@/assets/img/arrow-right.png" alt="" />
           </div>
         </div>
-      </div> -->
+      </div>
       <div id="features" class="featured">
         <div class="content">
           <header class="flex items-center justify-between">
@@ -86,14 +146,14 @@ onMounted(() => {
           </header>
           <div class="list">
             <div class="item" v-for="i in listCategories" :key="i">
-              <a :href="`/${i.slug.slug}`">
-                <img src="@/assets/img/featured-1.jpg" alt="Nikko Apartments" class="thumb" />
+              <a :href="`/${i.slug.slug}`" class="flex justify-center">
+                <img :src="i.img" :alt="i.title" class="thumb" />
               </a>
               <div class="body">
-                <h3 class="title mb-2">
-                  <a>{{ i.title }}</a>
-                </h3>
                 <div class="flex items-center justify-between">
+                  <h3 class="title mb-2">
+                    <a>{{ i.title }}</a>
+                  </h3>
                   <div class="flex items-center">
                     <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
                     <span class="label">{{ i.slug?.slug == "tieng-anh" ? 30 : 60 }} câu hỏi</span>
@@ -104,14 +164,14 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="working features p-12">
+      <div class="working features px-12 py-50">
         <div class="z-10">
           <header class="flex items-center justify-center mb-12">
             <h2 class="sub-title text-white text-center">Nhận xét của <span class="text-yellow">học viên</span></h2>
           </header>
           <div class="carousel flex items-center justify-around">
             <div v-for="(i, index) in review" :key="index" class="mb-6">
-              <div class="z-10 carousel__item h-250 w-300 thanks bg-white mb-8">
+              <div class="z-10 h-250 w-300 thanks bg-white mb-8">
                 <div class="w-full h-full p-12">
                   <div class="flex w-full justify-center mb-5">
                     <img v-if="index % 2 == 0" class="w-48" src="@/assets/img/quotes.png" alt="" />
@@ -154,19 +214,19 @@ onMounted(() => {
           </div>
         </ClientOnly>
       </div>
-      <div id="resources" class="stats p-12">
+      <div id="resources" class="stats px-12 py-50">
         <div class="content z-10">
-          <div class="row row-qty">
+          <div class="row row-qty" id="list-counter">
             <div class="qty-item text-center">
-              <strong class="qty text-white">1500+</strong>
+              <strong class="qty text-white" id="counter_1">0</strong>
               <p class="qty-desc text-white">Người đã mua đề thi</p>
             </div>
             <div class="qty-item text-center">
-              <strong class="qty text-white">5,000+</strong>
+              <strong class="qty text-white" id="counter_2">0</strong>
               <p class="qty-desc text-white">Đã tham gia cùng chúng tôi</p>
             </div>
             <div class="qty-item text-center">
-              <strong class="qty text-white">1000+</strong>
+              <strong class="qty text-white" id="counter_3">0</strong>
               <p class="qty-desc text-white">Người đã đậu và có việc làm</p>
             </div>
           </div>
@@ -276,7 +336,6 @@ onMounted(() => {
 }
 
 .featured .item .thumb {
-  width: 100%;
   height: 227px;
   object-fit: cover;
   border-top-left-radius: 12px;
@@ -284,7 +343,11 @@ onMounted(() => {
 }
 
 .featured .item .body {
+  border-top: 1px solid #f3f4f6;
   padding: 17px 20px 24px;
+  background: #fff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .featured .item .title a {
@@ -363,6 +426,16 @@ onMounted(() => {
 .stats .qty {
   font-weight: 600;
   font-size: 6.4rem;
+  animation: count-up 10s linear forwards;
+}
+
+@keyframes count-up {
+  from {
+    content: 0;
+  }
+  to {
+    content: 5000;
+  }
 }
 
 .stats .qty-desc {
@@ -486,6 +559,18 @@ onMounted(() => {
 .thanks {
   border-radius: 36px;
 }
+.post-title {
+  font-weight: 600;
+  line-height: 1.5;
+  color: #000339;
+}
+.body-post {
+  width: 100%;
+  padding: 17px 20px 24px;
+  background: var(--gray-100, #fff);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
 table {
   border-collapse: collapse;
   width: 100%;
@@ -500,5 +585,8 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+.carousel__item{
+  max-width: 600px;
 }
 </style>
