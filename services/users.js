@@ -6,7 +6,13 @@ export function useUsersService() {
       return res;
     });
   };
+  const listRank = async () => {
+    return api.fetch(`list-rank`, {}, "post").then((res) => {
+      return res;
+    });
+  };
   return {
     get,
+    listRank,
   };
 }

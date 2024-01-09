@@ -4,10 +4,14 @@ import "vue3-carousel/dist/carousel.css";
 import Footer from "../components/footer.vue";
 import { useCatgoriesService } from "@/services/categories";
 import { useSlugService } from "@/services/slug";
+import AnimationText from "@/components/animation-text.vue";
+import AnimationText2 from "@/components/animation-text-2.vue";
 
+const router = useRouter();
 const currentSlide = ref(0);
 const listCategories = ref(0);
 const listPost = ref([]);
+const hotNews = ref({});
 const review = ref([
   {
     review: "Cảm ơn mọi người trong thời gian qua đã chỉ bảo và giúp đỡ tôi rất nhiều. Chúc mọi người đạt được nhiều thành công.",
@@ -64,6 +68,7 @@ const animateCounter = (counterId) => {
       counter.current = counter.target;
       updateCounter(counterId);
       clearInterval(animationInterval);
+      return;
     }
   }, 50);
 };
@@ -89,6 +94,8 @@ const getPost = async () => {
     // loading.value = true;
     const res = await useSlugService().get("tin-tuc");
     listPost.value = res.list;
+    hotNews.value = res.list[0];
+
     // loading.value = false;
   } catch (e) {
     console.log(e);
@@ -98,23 +105,35 @@ const getPost = async () => {
 onMounted(() => {
   getCategories();
   getPost();
-  animateCounter("counter_1");
-  animateCounter("counter_2");
-  animateCounter("counter_3");
+  // setTimeout(() => {
+  //   animateCounter("counter_1");
+  //   animateCounter("counter_2");
+  //   animateCounter("counter_3");
+  // }, 1000);
 });
 // onUnmounted(() => {
-//   if (process.client) {
-//     window.removeEventListener("scroll", handleScroll());
-//   }
+//   animateCounter("counter_1");
+//   animateCounter("counter_2");
+//   animateCounter("counter_3");
 // });
 </script>
 <template>
   <NuxtLayout>
     <main>
-      <div class="hero-wrap p-12 flex items-center gap-5 justify-center mt-12">
-        <div class="mb-2 relative rounded-lg lg:w-4/5">
-          <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
-            <Slide v-for="i in listPost" :key="i" >
+      <div class="marquee-container py-6 white-bg" v-if="listPost.length > 0" @click="router.push(hotNews.slug.slug)">
+        <a :href="`${hotNews.slug.slug}`">
+          <div class="flex gap-2 items-center marquee-text">
+            <img class="w-24" src="@/assets/img/fire.png" alt="" />
+            <div class="text-red-500">{{ hotNews.title }}</div>
+            <img class="w-24" src="@/assets/img/fire.png" alt="" />
+          </div>
+        </a>
+      </div>
+      <div class="hero-wrap py-12 flex items-center gap-5 justify-center w-full lg:flex-row sm:flex-col">
+        <animation-text class="lg:w-1/5 sm:w-full" />
+        <div class="mb-2 relative rounded-lg lg:w-3/5">
+          <Carousel :autoplay="2000" :items-to-show="1" :wrap-around="true" v-model="currentSlide">
+            <Slide v-for="i in listPost" :key="i">
               <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
                 <div class="h-420 w-full rounded-lg">
                   <img class="h-420 w-full" :src="i.img" alt="Besnik." />
@@ -130,7 +149,6 @@ onMounted(() => {
               </a>
             </Slide>
           </Carousel>
-
           <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev">
             <img src="@/assets/img/arrow-left.png" alt="" />
           </div>
@@ -138,6 +156,10 @@ onMounted(() => {
             <img src="@/assets/img/arrow-right.png" alt="" />
           </div>
         </div>
+        <animation-text-2 class="lg:w-1/5 sm:w-full" />
+      </div>
+      <div id="resources" class="dao-ly px-12 py-150 text-white fs-52 text-center mt-12">
+        Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
       </div>
       <div id="features" class="featured">
         <div class="content">
@@ -150,13 +172,13 @@ onMounted(() => {
                 <img :src="i.img" :alt="i.title" class="thumb" />
               </a>
               <div class="body">
-                <div class="flex items-center justify-between">
+                <div>
                   <h3 class="title mb-2">
                     <a>{{ i.title }}</a>
                   </h3>
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
+                  <div class="flex items-center justify-between">
                     <span class="label">{{ i.slug?.slug == "tieng-anh" ? 30 : 60 }} câu hỏi</span>
+                    <span class="label">{{ i.slug?.slug == "tieng-anh" ? 30 : 60 }} phút</span>
                   </div>
                 </div>
               </div>
@@ -164,7 +186,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="working features px-12 py-50">
+      <div class="working features px-12 py-150">
         <div class="z-10">
           <header class="flex items-center justify-center mb-12">
             <h2 class="sub-title text-white text-center">Nhận xét của <span class="text-yellow">học viên</span></h2>
@@ -214,7 +236,7 @@ onMounted(() => {
           </div>
         </ClientOnly>
       </div>
-      <div id="resources" class="stats px-12 py-50">
+      <div id="resources" class="stats px-12 py-150">
         <div class="content z-10">
           <div class="row row-qty" id="list-counter">
             <div class="qty-item text-center">
@@ -253,10 +275,30 @@ onMounted(() => {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Style the marquee text */
+.marquee-text {
+  font-size: 24px;
+  white-space: nowrap;
+  animation: marqueeAnimation 7s linear infinite;
+}
+
+/* Animation for the marquee text */
+@keyframes marqueeAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
 .hero-wrap {
   position: relative;
-  height: 500px;
 }
 
 .hero-wrap .sub-title {
@@ -323,7 +365,7 @@ onMounted(() => {
 
 .featured .list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-top: 70px;
 }
@@ -370,7 +412,12 @@ onMounted(() => {
   font-size: 1.4rem;
   letter-spacing: 0.01em;
 }
-
+.dao-ly {
+  background-color: #1f0e00eb;
+  .text {
+    z-index: 2;
+  }
+}
 /* Stats */
 .stats {
   position: relative;
@@ -586,7 +633,7 @@ th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
-.carousel__item{
+.carousel__item {
   max-width: 600px;
 }
 </style>

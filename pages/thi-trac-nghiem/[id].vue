@@ -285,7 +285,7 @@ onMounted(() => {
 .contact {
   cursor: pointer;
   border-radius: 12px;
-  background: var(--Theme-Blue, #003c97);
+  background: var(--Theme-Blue, #ff9100);
   display: flex;
   padding: 16px 17px;
   justify-content: center;

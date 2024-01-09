@@ -1,11 +1,13 @@
 <script setup>
 import { useUsersService } from "@/services/users";
 import { useAuthService } from "@/services/auth";
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const showMenu = ref(false);
 const user = ref({});
 const loading = ref(false);
 const router = useRouter();
+const open = ref(false);
 
 const hoverShowMenu = () => {
   showMenu.value = true;
@@ -21,8 +23,6 @@ const getUser = async () => {
     const res = await useUsersService().get();
     if (res) {
       user.value = res;
-      console.log(user.value);
-      console.log(Object.keys(user.value).length);
     }
     loading.value = false;
   } catch (e) {
@@ -44,9 +44,9 @@ onMounted(() => {
 <template>
   <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
   <div v-else class="relative h-screen">
-    <a href="tel:0705908789" class="icon-zalo">
+    <div @click="open = true" class="icon-zalo">
       <img class="w-full h-full" src="@/assets/img/zalo.svg" alt="" />
-    </a>
+    </div>
     <header class="fixed-header">
       <div class="content">
         <nav class="navbar">
@@ -75,8 +75,9 @@ onMounted(() => {
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
             </li>
-            <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
+            <li><a class="title" href="tai-lieu">Tài liệu</a></li>
             <li><a class="title" href="tin-tuc">Tin tức</a></li>
+            <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
             Xin chào, {{ user.name }}! <span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
@@ -109,8 +110,9 @@ onMounted(() => {
               <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <!-- <li><a class="title" href="tai-lieu">Tài liệu</a></li> -->
+          <li><a class="title" href="tai-lieu">Tài liệu</a></li>
           <li><a class="title" href="tin-tuc">Tin tức</a></li>
+          <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
@@ -125,9 +127,48 @@ onMounted(() => {
     <main class="h-content">
       <slot />
     </main>
+    <TransitionRoot as="template" :show="open">
+      <Dialog as="div" class="relative z-10" @close="open = false">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter-to="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100 translate-y-0 sm:scale-100"
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-8 text-left shadow-xl transition-all mw-640">
+                <div class="flex items-center justify-center"><img class="mb-3 mt-3 contact-zalo" src="@/assets/img/contact-zalo.jpg" alt="" /></div>
+                <div class="flex justify-end">
+                  <div class="cursor-pointer" @click="open = false">Thoát</div>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </div>
 </template>
 <style lang="scss" scoped>
+.contact-zalo {
+  width: 300px;
+}
 .content {
   width: 100%;
   padding: 0 50px 0 50px;
@@ -135,7 +176,7 @@ onMounted(() => {
   margin-right: auto;
 }
 .h-content {
-  height: calc(100vh - 65px);
+  height: calc(100% - 65px);
   overflow-y: auto;
 }
 
@@ -143,7 +184,7 @@ onMounted(() => {
   display: inline-block;
   min-width: 98px;
   padding: 18px 16px;
-  background: var(--primary-color);
+  background: #ff9100;
   border-radius: 12px;
   font-weight: 500;
   font-size: 1.4rem;

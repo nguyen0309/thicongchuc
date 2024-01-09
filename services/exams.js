@@ -6,6 +6,17 @@ export function useExamsService() {
       return res;
     });
   };
+
+  const history = async (slug) => {
+    return api.fetch(`exam-history/list-for-topic/${slug}`).then((res) => {
+      return res;
+    });
+  };
+  const historyAll = async () => {
+    return api.fetch(`exam-history/list-all-for-user`, {}, 'post').then((res) => {
+      return res;
+    });
+  };
   const start = async (id, page, limit) => {
     return api.fetch(`exam/${id}/start`, { page, limit }, "post").then((res) => {
       return res;
@@ -20,5 +31,7 @@ export function useExamsService() {
     generate,
     start,
     end,
+    history,
+    historyAll
   };
 }

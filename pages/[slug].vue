@@ -10,6 +10,7 @@ const loading = ref(false);
 const type = ref("");
 const post = ref({});
 const listPost = ref([]);
+const listHistory = ref([]);
 
 const getSlug = async () => {
   try {
@@ -19,6 +20,7 @@ const getSlug = async () => {
     type.value = res.type;
     if (type.value == "exam") {
       list.value = res.data;
+      getHistory(route.params.slug);
       console.log(list.value.title);
     }
     if (type.value == "posts") {
@@ -28,6 +30,16 @@ const getSlug = async () => {
       post.value = res.data;
     }
     loading.value = false;
+  } catch (e) {
+    console.log(e);
+  }
+};
+const getHistory = async () => {
+  try {
+    const res = await useExamsService().history(route.params.slug);
+    if (res) {
+      listHistory.value = res.list;
+    }
   } catch (e) {
     console.log(e);
   }
@@ -52,7 +64,31 @@ onMounted(() => {
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
     <div v-else class="wrap-content h-full p-12 white-bg">
       <div v-if="type == 'exam'">
-        <div class="contact cursor-pointer" v-if="list.is_access_topic" @click="generateExam(list.slug.slug)">Vào thi!</div>
+        <div v-if="list.is_access_topic">
+          <div class="contact cursor-pointer mb-8" @click="generateExam(list.slug.slug)">Vào thi!</div>
+          <div class="fs-30 fw-600 text-black-700 mb-8">Lịch sử những lần thi trước</div>
+          <div class="list-history" v-if="listHistory.length > 0">
+            <div class="block p-6" v-for="i in listHistory" :key="i.id">
+              <div class="flex items-center justify-between mb-4">
+                <div class="label">Kết quả</div>
+                <div class="label" :class="i.score > 5 ? 'text-green' : 'text-red-500'">{{ i.score > 5 ? "Đậu" : "Trượt" }}</div>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="label">Điểm</div>
+                <div class="label">{{ i.score }}</div>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="label">Số câu làm đúng</div>
+                <div class="label">{{ i.total_correct_answer }}</div>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="label">Thời gian làm bài</div>
+                <div class="label">{{ i.total_minute_work }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="fs-20 text-gray-700 fw-400 leading-5">Bạn chưa có lịch sử thi ngành này!</div>
+        </div>
         <div class="block p-6" v-else>
           <div class="fs-36 fw-600 text-black-700 mb-8">Thi thử trắc nghiệm Kiến thức chung {{ list.title }}</div>
           <div class="fs-18 leading-5 fw-400 text-red-700 alert p-6 flex gap-2 items-center mb-8">
@@ -84,7 +120,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div v-if="type == 'post'" class="wrap-content h-full">
+      <div v-if="type == 'post'" class="wrap-content">
         <h3 class="fs-28 post-title mb-2">{{ post.title }}</h3>
         <div class="fs-16 mb-4 text-gray-500 leading-6 fw-500">{{ post.description }}</div>
         <div class="flex justify-center mb-4"><img :src="post.img" alt="" /></div>
@@ -109,7 +145,7 @@ onMounted(() => {
 }
 .contact {
   border-radius: 12px;
-  background: var(--Theme-Blue, #003c97);
+  background: var(--Theme-Blue, #ff9100);
   display: flex;
   padding: 16px 17px;
   justify-content: center;
@@ -147,7 +183,7 @@ onMounted(() => {
 .featured .item .body {
   width: 100%;
   padding: 17px 20px 24px;
-  background: var(--gray-100, #F3F4F6);
+  background: var(--gray-100, #f3f4f6);
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -161,5 +197,21 @@ onMounted(() => {
   font-weight: 500;
   font-size: 1.4rem;
   letter-spacing: 0.01em;
+}
+.list-history {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+.block {
+  height: max-content;
+  border-radius: 20px;
+  background: var(--white, #fff);
+  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+@media screen and (max-width: 767px) {
+  .list-history {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
