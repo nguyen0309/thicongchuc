@@ -6,7 +6,13 @@ export function useMediaService() {
       return res;
     });
   };
+  const uploadMedia = async (data) => {
+    return api.fetch(`admin/upload`, { data }, "POST", true).then((res) => {
+      return res;
+    });
+  };
   return {
     list,
+    uploadMedia,
   };
 }

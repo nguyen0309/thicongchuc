@@ -1,7 +1,7 @@
 import config from "@/config";
 
 class ApiServer {
-  async fetch(cmd, args = {}, method = "") {
+  async fetch(cmd, args = {}, method = "", media) {
     if (!method) method = Object.keys(args).length === 0 ? "GET" : "POST";
     let url = config.beUrl + "/" + cmd;
     if (Object.keys(args).length && method === "GET") {
@@ -23,7 +23,7 @@ class ApiServer {
             headers: {
               ...headers,
               Accept: "application/json",
-              "Content-Type": "application/json",
+              "Content-Type": media ? "" : "application/json",
             },
             body: JSON.stringify(args),
           };
