@@ -21,19 +21,19 @@ const getListPost = async () => {
     console.log(e);
   }
 };
-// const createTransaction = async (user_id) => {
-//   try {
-//     const res = await useAdminService().createTransaction(user_id, 1, 0, listTopic);
-//     if (res) {
-//       open.value = true;
-//       setTimeout(() => {
-//         open.value = false;
-//       }, 3000);
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+const createTransaction = async (user_id) => {
+  try {
+    // const res = await useAdminService().createTransaction(user_id, 1, 0, listTopic);
+    // if (res) {
+    //   open.value = true;
+    //   setTimeout(() => {
+    //     open.value = false;
+    //   }, 3000);
+    // }
+  } catch (e) {
+    console.log(e);
+  }
+};
 const addPost = () => {
   open.value = true;
 };

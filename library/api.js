@@ -9,23 +9,26 @@ class ApiServer {
     }
     let token = "";
     if (process.client) token = localStorage.getItem("congchuc24h_token");
-    let headers = {};
+    let headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    };
     if (token) {
       headers = {
         authorization: "Bearer " + token,
       };
+    }
+    if(media) {
+      delete headers["Content-Type"]
+      delete headers.Accept
     }
     const options =
       method === "GET"
         ? { headers }
         : {
             method,
-            headers: {
-              ...headers,
-              Accept: "application/json",
-              "Content-Type": media ? "" : "application/json",
-            },
-            body: JSON.stringify(args),
+            headers,
+            body: media ? args : JSON.stringify(args),
           };
     return fetch(url, options).then((res) => res.json());
   }

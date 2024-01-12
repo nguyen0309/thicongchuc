@@ -26,7 +26,6 @@ const uploadImg = async (file) => {
     let data = new FormData();
     data.append("files", file);
     data.append("ref_type", "post");
-    console.log('data', data)
     const res = await useMediaService().uploadMedia(data);
     if (res) {
     }
