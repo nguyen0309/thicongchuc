@@ -1,16 +1,35 @@
 <template>
   <div class="text-yellow fs-36 text-center animation-bg p-4 overflow-hidden">
-    <span>Thế</span> <span>giới</span> <span>này</span> <span>thực</span> <span>sự</span> <span>rất</span> <span>công</span> <span>bằng,</span> <span>để</span> <span>giỏi</span> <span>hơn</span> <span>người</span> <span>khác</span> <span>thì</span> <span>phải</span> <span>làm</span> <span>những</span> <span>việc</span> <span>người</span> <span>khác</span> <span>không</span> <span>làm</span> <span>được.</span> <span>Và</span> <span>tất</span> <span>nhiên</span> <span>có</span> <span>rất</span> <span>nhiều</span> <span>người</span> <span>giỏi</span> <span>hơn</span> <span>bạn</span> <span>nhưng</span> <span>cũng</span> <span>có</span> <span>rất</span> <span>nhiều</span> <span>người</span> <span>thua</span> <span>kém</span> <span>bạn.</span>
+    <div class="wrap-span z-10">
+      <span>Thế</span> <span>giới</span> <span>này</span> <span>thực</span> <span>sự</span> <span>rất</span> <span>công</span> <span>bằng,</span> <span>để</span> <span>giỏi</span> <span>hơn</span> <span>người</span> <span>khác</span> <span>thì</span> <span>phải</span> <span>làm</span> <span>những</span> <span>việc</span> <span>người</span> <span>khác</span> <span>không</span> <span>làm</span> <span>được.</span> <span>Và</span> <span>tất</span> <span>nhiên</span> <span>có</span> <span>rất</span> <span>nhiều</span> <span>người</span> <span>giỏi</span> <span>hơn</span> <span>bạn</span> <span>nhưng</span> <span>cũng</span> <span>có</span> <span>rất</span> <span>nhiều</span> <span>người</span> <span>thua</span> <span>kém</span> <span>bạn.</span>
+    </div>
   </div>
 </template>
 <style scoped>
 .animation-bg {
-  position: relative;
-  background: transparent url(@/assets/img/animation-bg.jpg) no-repeat center;
-  background-size: cover;
-  text-align: center;
-  transform: scale(0.94);
-  animation: scale 3s forwards cubic-bezier(0.5, 1, 0.89, 1);
+    margin-top: -3px;
+    height: 548px;
+    position: relative;
+    background: transparent url(@/assets/img/working_1.jpg) no-repeat center;
+    background-size: cover;
+    text-align: center;
+    transform: scale(0.94);
+    animation: scale 3s forwards cubic-bezier(0.5, 1, 0.89, 1);
+  }
+.animation-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #1f0e00eb;
+}
+.wrap-span{
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 }
 
 @keyframes scale {

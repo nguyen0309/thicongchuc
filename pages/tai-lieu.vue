@@ -60,17 +60,6 @@ onMounted(() => {
   </NuxtLayout>
 </template>
 <style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 16px;
-}
 .find {
   width: 100%;
   font-size: 16px;

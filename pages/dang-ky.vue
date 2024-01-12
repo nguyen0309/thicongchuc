@@ -33,7 +33,7 @@ const signUp = async () => {
 
     const res = await useAuthService().signUp(email.value, name.value, password.value);
     if (res.data) {
-      console.log("ok");
+      router.push('/dang-nhap')
     } else {
       errorEmail.value = "Email đã tồn tại!";
     }

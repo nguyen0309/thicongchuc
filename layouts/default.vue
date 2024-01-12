@@ -7,6 +7,7 @@ const showMenu = ref(false);
 const user = ref({});
 const loading = ref(false);
 const router = useRouter();
+const route = useRoute();
 const open = ref(false);
 
 const hoverShowMenu = () => {
@@ -23,6 +24,7 @@ const getUser = async () => {
     const res = await useUsersService().get();
     if (res) {
       user.value = res;
+      if (route.name.includes("admin") && user.value.role != "admin") router.push("/trang-chu");
     }
     loading.value = false;
   } catch (e) {
@@ -178,6 +180,7 @@ onMounted(() => {
 .h-content {
   height: calc(100% - 65px);
   overflow-y: auto;
+  background: #fff;
 }
 
 .btn {
@@ -205,7 +208,7 @@ onMounted(() => {
 
 /* ======== Header ======== */
 .fixed-header {
-  background: #e6f0ff;
+  background: #fff7f0;
   padding-top: 1px;
   position: sticky;
   top: -1px;

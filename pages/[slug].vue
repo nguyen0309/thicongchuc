@@ -2,6 +2,8 @@
 import { useSlugService } from "@/services/slug";
 import { useExamsService } from "@/services/exams";
 import config from "@/config";
+import AnimationText from "@/components/animation-text.vue";
+import AnimationText2 from "@/components/animation-text-2.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -62,7 +64,7 @@ onMounted(() => {
 <template>
   <NuxtLayout>
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
-    <div v-else class="wrap-content h-full p-12 white-bg">
+    <div v-else class="wrap-content p-12 white-bg">
       <div v-if="type == 'exam'">
         <div v-if="list.is_access_topic">
           <div class="contact cursor-pointer mb-8" @click="generateExam(list.slug.slug)">Vào thi!</div>
@@ -95,7 +97,7 @@ onMounted(() => {
             <img src="@/assets/img/error.png" alt="" />
             Bạn cần được mở khoá để làm đề thi này!
           </div>
-          <div class="leading-6 fs-16 fw-700 text-blue underline mb-8">Đăng ký mua đề thi với giá xxx/tháng!</div>
+          <!-- <div class="leading-6 fs-16 fw-700 text-blue underline mb-8">Đăng ký mua đề thi với giá xxx/tháng!</div> -->
           <a :href="`tel:${config.phone}`" class="contact">Liên hệ Zalo: {{ config.phone }}</a>
         </div>
       </div>

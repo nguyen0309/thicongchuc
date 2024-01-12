@@ -1,18 +1,37 @@
 <template>
-    <div class="text-yellow fs-36 text-center animation-bg p-4 overflow-hidden h-700">
-      <span>Đừng</span> <span>đánh</span> <span>giá</span> <span>thấp</span> <span>bản</span> <span>thân,</span> <span>nhưng</span> <span>cũng</span> <span>đừng</span> <span>tự</span> <span>đề</span> <span>cao</span> <span>mình.</span> <span>Hãy</span> <span>trân</span> <span>trọng</span> <span>những</span> <span>gì</span> <span>đang</span> <span>có</span> <span>và</span> <span>không</span> <span>ngừng</span> <span>tiến</span> <span>tất</span> <span>lên,</span> <span>vì</span> <span>cuộc</span> <span>sống</span> <span>này</span> <span>vô</span> <span>thường</span> <span>lắm.</span> 
+    <div class="text-yellow fs-36 text-center animation-bg p-4 overflow-hidden h-700 ">
+      <div class="wrap-span z-10">
+        <span>Đừng</span> <span>đánh</span> <span>giá</span> <span>thấp</span> <span>bản</span> <span>thân,</span> <span>nhưng</span> <span>cũng</span> <span>đừng</span> <span>tự</span> <span>đề</span> <span>cao</span> <span>mình.</span> <span>Hãy</span> <span>trân</span> <span>trọng</span> <span>những</span> <span>gì</span> <span>đang</span> <span>có</span> <span>và</span> <span>không</span> <span>ngừng</span> <span>tiến</span> <span>tất</span> <span>lên,</span> <span>vì</span> <span>cuộc</span> <span>sống</span> <span>này</span> <span>vô</span> <span>thường</span> <span>lắm.</span> 
+      </div>  
     </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
              
   </template>
   <style scoped>
   .animation-bg {
+    margin-top: -3px;
+    height: 548px;
     position: relative;
-    background: transparent url(@/assets/img/animation-bg.jpg) no-repeat center;
+    background: transparent url(@/assets/img/working_2.jpg) no-repeat center;
     background-size: cover;
     text-align: center;
     transform: scale(0.94);
     animation: scale 3s forwards cubic-bezier(0.5, 1, 0.89, 1);
   }
+  .animation-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #1f0e00eb;
+}
+.wrap-span{
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
   
   @keyframes scale {
     100% {

@@ -6,12 +6,14 @@ import { useCatgoriesService } from "@/services/categories";
 import { useSlugService } from "@/services/slug";
 import AnimationText from "@/components/animation-text.vue";
 import AnimationText2 from "@/components/animation-text-2.vue";
+import { useUsersService } from "@/services/users";
 
 const router = useRouter();
 const currentSlide = ref(0);
 const listCategories = ref(0);
 const listPost = ref([]);
 const hotNews = ref({});
+const listRank = ref([]);
 const review = ref([
   {
     review: "Cảm ơn mọi người trong thời gian qua đã chỉ bảo và giúp đỡ tôi rất nhiều. Chúc mọi người đạt được nhiều thành công.",
@@ -32,17 +34,17 @@ const review = ref([
   },
 ]);
 const tables = ref([
-  { name: "kyluc", score: 10, time: "00:10:58" },
-  { name: "Lê Thị Khoa", score: 10, time: "00:11:35" },
-  { name: "sieunhan_zzz", score: 10, time: "00:13:53" },
-  { name: "account", score: 10, time: "00:14:42" },
-  { name: "thuykhoa", score: 10, time: "00:15:24" },
-  { name: "Nguyễn Lê Na", score: 10, time: "00:17:24" },
-  { name: "checkzzz@@@", score: 10, time: "00:18:24" },
-  { name: "Đinh Minh Thư", score: 10, time: "00:19:24" },
-  { name: "meowmeow", score: 10, time: "00:20:43" },
-  { name: "La Thị Hà", score: 10, time: "00:21:53" },
-  { name: "sweet@@@", score: 10, time: "00:22:21" },
+  { user_name: "kyluc", exam_score: 10, time_diff: "00:10:58", topic_title: "Hải Quan" },
+  { user_name: "Lê Thị Khoa", exam_score: 10, time_diff: "00:11:35", topic_title: "Tiếng Anh" },
+  { user_name: "sieunhan_zzz", exam_score: 10, time_diff: "00:13:53", topic_title: "Kho bạc nhà nước" },
+  { user_name: "account", exam_score: 10, time_diff: "00:14:42", topic_title: "Ngân hàng nhà nước" },
+  { user_name: "thuykhoa", exam_score: 10, time_diff: "00:15:24", topic_title: "Kho bạc nhà nước" },
+  { user_name: "Nguyễn Lê Na", exam_score: 10, time_diff: "00:17:24", topic_title: "Thuế" },
+  { user_name: "checkzzz@@@", exam_score: 10, time_diff: "00:18:24", topic_title: "Thuế" },
+  { user_name: "Đinh Minh Thư", exam_score: 10, time_diff: "00:19:24", topic_title: "Thống kê" },
+  { user_name: "meowmeow", exam_score: 10, time_diff: "00:20:43", topic_title: "Bảo hiểm xã hội" },
+  { user_name: "La Thị Hà", exam_score: 10, time_diff: "00:21:53", topic_title: "Bảo hiểm xã hội" },
+  { user_name: "sweet@@@", exam_score: 10, time_diff: "00:22:21", topic_title: "Tiếng Anh" },
 ]);
 
 const counters = {
@@ -101,21 +103,29 @@ const getPost = async () => {
     console.log(e);
   }
 };
+const getListRank = async () => {
+  try {
+    // loading.value = true;
+    const res = await useUsersService().listRank();
+    if (res) {
+      listRank.value = res.list;
+    }
+    // loading.value = false;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 onMounted(() => {
   getCategories();
   getPost();
-  // setTimeout(() => {
-  //   animateCounter("counter_1");
-  //   animateCounter("counter_2");
-  //   animateCounter("counter_3");
-  // }, 1000);
+  getListRank();
+  setTimeout(() => {
+    animateCounter("counter_1");
+    animateCounter("counter_2");
+    animateCounter("counter_3");
+  }, 1000);
 });
-// onUnmounted(() => {
-//   animateCounter("counter_1");
-//   animateCounter("counter_2");
-//   animateCounter("counter_3");
-// });
 </script>
 <template>
   <NuxtLayout>
@@ -130,8 +140,8 @@ onMounted(() => {
         </a>
       </div>
       <div class="hero-wrap py-12 flex items-center gap-5 justify-center w-full lg:flex-row sm:flex-col">
-        <animation-text class="lg:w-1/5 sm:w-full" />
-        <div class="mb-2 relative rounded-lg lg:w-3/5">
+        <animation-text class="lg:w-1/3 sm:w-full" />
+        <div class="relative rounded-lg lg:w-1/3">
           <Carousel :autoplay="2000" :items-to-show="1" :wrap-around="true" v-model="currentSlide">
             <Slide v-for="i in listPost" :key="i">
               <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
@@ -142,9 +152,7 @@ onMounted(() => {
                   <div class="post-title text-left fs-24 mb-2 line-clamp-1">
                     {{ i.title }}
                   </div>
-                  <div class="flex items-center">
-                    <span class="label text-left line-clamp-3">{{ i.description }}</span>
-                  </div>
+                  <div class="label mh-130 text-left line-clamp-3">{{ i.description }}</div>
                 </div>
               </a>
             </Slide>
@@ -156,10 +164,12 @@ onMounted(() => {
             <img src="@/assets/img/arrow-right.png" alt="" />
           </div>
         </div>
-        <animation-text-2 class="lg:w-1/5 sm:w-full" />
+        <animation-text-2 class="lg:w-1/3 sm:w-full" />
       </div>
-      <div id="resources" class="dao-ly px-12 py-150 text-white fs-52 text-center mt-12">
-        Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
+      <div class="dao-ly stats px-12 py-150 text-white fs-52 text-center mt-12">
+        <div class="z-10">
+          Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
+        </div>
       </div>
       <div id="features" class="featured">
         <div class="content">
@@ -168,7 +178,7 @@ onMounted(() => {
           </header>
           <div class="list">
             <div class="item" v-for="i in listCategories" :key="i">
-              <a :href="`/${i.slug.slug}`" class="flex justify-center">
+              <a :href="`/${i.slug.slug}`" class="flex justify-center wrap-thumb">
                 <img :src="i.img" :alt="i.title" class="thumb" />
               </a>
               <div class="body">
@@ -222,15 +232,17 @@ onMounted(() => {
             <table>
               <tr>
                 <th>STT</th>
-                <th>Tên</th>
+                <th>Tên Người Dùng</th>
+                <th>Ngành</th>
                 <th>Điểm</th>
                 <th>Thời gian</th>
               </tr>
-              <tr v-for="(i, index) in tables" :key="index">
+              <tr v-for="(i, index) in listRank" :key="index">
                 <td>{{ index + 1 }}</td>
-                <td>{{ i.name }}</td>
-                <td>{{ i.score }}</td>
-                <td>{{ i.time }}</td>
+                <td>{{ i.user_name }}</td>
+                <td>{{ i.topic_title }}</td>
+                <td>{{ i.exam_score }}</td>
+                <td>{{ i.time_diff }}</td>
               </tr>
             </table>
           </div>
@@ -284,7 +296,7 @@ onMounted(() => {
 .marquee-text {
   font-size: 24px;
   white-space: nowrap;
-  animation: marqueeAnimation 7s linear infinite;
+  animation: marqueeAnimation 10s linear infinite;
 }
 
 /* Animation for the marquee text */
@@ -377,6 +389,9 @@ onMounted(() => {
   // box-shadow: 0 0 1px 1px #000000
 }
 
+.wrap-thumb {
+  border: 1px solid #f3f4f6;
+}
 .featured .item .thumb {
   height: 227px;
   object-fit: cover;
@@ -385,9 +400,8 @@ onMounted(() => {
 }
 
 .featured .item .body {
-  border-top: 1px solid #f3f4f6;
   padding: 17px 20px 24px;
-  background: #fff;
+  background: #f3f4f6;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -412,17 +426,16 @@ onMounted(() => {
   font-size: 1.4rem;
   letter-spacing: 0.01em;
 }
+
 .dao-ly {
+  background: transparent url(@/assets/img/working_4.jpg) no-repeat center !important;
   background-color: #1f0e00eb;
-  .text {
-    z-index: 2;
-  }
 }
 /* Stats */
 .stats {
   position: relative;
-  // margin-top: 75px;
-  // padding: 50px 0;
+  background: transparent url(@/assets/img/working.png) no-repeat center;
+  background-size: cover;
 }
 .stats::before {
   content: "";
@@ -514,7 +527,8 @@ onMounted(() => {
   width: calc(100vw - 5px);
   // height: 500px;
   position: relative;
-  // background: transparent url(@/assets/img/working.png) no-repeat center;
+  background: transparent url(@/assets/img/working_3.jpg) no-repeat center;
+  background-size: cover;
 }
 .working::before {
   content: "";
@@ -618,22 +632,11 @@ onMounted(() => {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
 
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 16px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 .carousel__item {
   max-width: 600px;
+}
+.mh-130 {
+  max-height: 130px;
 }
 </style>
