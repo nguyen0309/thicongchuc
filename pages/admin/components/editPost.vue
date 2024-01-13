@@ -3,8 +3,11 @@ import { useAdminService } from "@/services/admin";
 import { useMediaService } from "@/services/media";
 
 const props = defineProps(["id"]);
-const emit = defineEmits(["close"]);
-const obj = ref({});
+const emit = defineEmits(["close", "action-success"]);
+const title = ref("");
+const description = ref("");
+const content = ref("");
+const img = ref("");
 
 const getFileName = (event) => {
   const files = event.target.files;
@@ -13,9 +16,10 @@ const getFileName = (event) => {
 
 const addPost = async () => {
   try {
-    const res = await useAdminService().addPost(obj.value.title, obj.value.description, obj.value.content, obj.value.img, 1, []);
+    // console.log("obj.value", obj.value);
+    const res = await useAdminService().addPost(title.value, description.value, content.value, img.value, 2, []);
     if (res) {
-      emit("close");
+      emit("action-success");
     }
   } catch (e) {
     console.log(e);
@@ -28,6 +32,7 @@ const uploadImg = async (file) => {
     data.append("ref_type", "post");
     const res = await useMediaService().uploadMedia(data);
     if (res) {
+      img.value = res.list[0].src;
     }
   } catch (e) {
     console.log(e);
@@ -39,19 +44,19 @@ const uploadImg = async (file) => {
     <div class="fs-30 leading-5 fw-500 mb-12 text-center text-blue">Thêm tin tức</div>
     <div class="mb-4">
       <div class="label mb-2">Tiêu đề</div>
-      <input v-model="obj.title" class="w-full" type="text" name="" id="" />
+      <input v-model="title" class="w-full" type="text" name="" id="" />
     </div>
     <div class="mb-4">
       <div class="label mb-2">Mô tả</div>
-      <textarea rows="3" v-model="obj.description" class="w-full" type="text" name="" id="" />
+      <textarea rows="3" v-model="description" class="w-full" type="text" name="" id="" />
     </div>
     <div class="mb-4">
       <div class="label mb-2">Nội dung</div>
-      <textarea rows="8" v-model="obj.content" class="w-full" type="text" name="" id="" />
+      <textarea rows="8" v-model="content" class="w-full" type="text" name="" id="" />
     </div>
     <div class="mb-4">
       <div class="label mb-2">Ảnh</div>
-      <input type="file" id="myFile" name="filename" @change="getFileName" accept="image/gif, image/jpeg, image/png" />
+      <input type="file" id="myFile" name="filename" @change="getFileName" accept="image/jpeg, image/png" />
     </div>
     <div class="flex justify-end gap-3">
       <button @click="emit('close')" class="find">Thoát</button>

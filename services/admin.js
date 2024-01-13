@@ -21,6 +21,11 @@ export function useAdminService() {
       return res;
     });
   };
+  const deleteTransaction = async (id) => {
+    return api.fetch(`admin/transaction/delete/${id}`, {}, "delete").then((res) => {
+      return res;
+    });
+  };
   const addPost = async (title, description, content, img, topic_id, tag_ids) => {
     return api.fetch(`admin/post/create`, { title, description, content, img, topic_id, tag_ids }).then((res) => {
       return res;
@@ -31,12 +36,19 @@ export function useAdminService() {
       return res;
     });
   };
+  const deletePost = async (id) => {
+    return api.fetch(`admin/post/delete/${id}`, {}, "delete").then((res) => {
+      return res;
+    });
+  };
 
   return {
     getListUser,
     listTransaction,
     createTransaction,
+    deleteTransaction,
     listPost,
     addPost,
+    deletePost,
   };
 }

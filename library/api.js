@@ -11,16 +11,14 @@ class ApiServer {
     if (process.client) token = localStorage.getItem("congchuc24h_token");
     let headers = {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      Accept: "application/json",
     };
     if (token) {
-      headers = {
-        authorization: "Bearer " + token,
-      };
+      headers["authorization"] = "Bearer " + token;
     }
-    if(media) {
-      delete headers["Content-Type"]
-      delete headers.Accept
+    if (media) {
+      delete headers["Content-Type"];
+      delete headers.Accept;
     }
     const options =
       method === "GET"

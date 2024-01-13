@@ -48,9 +48,9 @@ const tables = ref([
 ]);
 
 const counters = {
-  counter_1: { current: 0, target: 1000, increment: 20 },
-  counter_2: { current: 0, target: 10000, increment: 200 },
-  counter_3: { current: 0, target: 5000, increment: 100 },
+  counter_1: { current: 0, target: 500, increment: 10 },
+  counter_2: { current: 0, target: 5000, increment: 100 },
+  counter_3: { current: 0, target: 300, increment: 6 },
 };
 
 const updateCounter = (counterId) => {
@@ -139,37 +139,53 @@ onMounted(() => {
           </div>
         </a>
       </div>
-      <div class="hero-wrap py-12 flex items-center gap-5 justify-center w-full lg:flex-row sm:flex-col">
-        <animation-text class="lg:w-1/3 sm:w-full" />
-        <div class="relative rounded-lg lg:w-1/3">
-          <Carousel :autoplay="2000" :items-to-show="1" :wrap-around="true" v-model="currentSlide">
-            <Slide v-for="i in listPost" :key="i">
-              <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
-                <div class="h-420 w-full rounded-lg">
-                  <img class="h-420 w-full" :src="i.img" alt="Besnik." />
-                </div>
-                <div class="body-post">
-                  <div class="post-title text-left fs-24 mb-2 line-clamp-1">
-                    {{ i.title }}
-                  </div>
-                  <div class="label mh-130 text-left line-clamp-3">{{ i.description }}</div>
-                </div>
-              </a>
-            </Slide>
-          </Carousel>
-          <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev">
-            <img src="@/assets/img/arrow-left.png" alt="" />
-          </div>
-          <div class="absolute arrow-slide cursor-pointer right-arrow" @click="next">
-            <img src="@/assets/img/arrow-right.png" alt="" />
-          </div>
-        </div>
-        <animation-text-2 class="lg:w-1/3 sm:w-full" />
-      </div>
-      <div class="dao-ly stats px-12 py-150 text-white fs-52 text-center mt-12">
-        <div class="z-10">
+      <div class="dao-ly stats px-12 py-150 text-white fs-52">
+        <div>
           Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
         </div>
+      </div>
+      <div class="flex items-center wrap-news">
+        <div class="flex flex-col w-1/3 h-full news-column">
+          <div class="dao-ly stats p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
+            <div>Chào mừng bạn đến với website Thicongchuc24h!</div>
+          </div>
+          <div class="dao-ly stats p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
+            <div>Nơi tổng hợp kiến thức, tài liêu ôn thi các ngành, đề thi các năm</div>
+          </div>
+        </div>
+        <div class="flex flex-col w-1/3 news-column">
+          <div class="relative rounded-lg">
+            <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
+              <Slide v-for="i in listPost" :key="i">
+                <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
+                  <div class="h-300 w-full rounded-lg">
+                    <img class="h-300 w-full" :src="i.img" alt="Besnik." />
+                  </div>
+                  <div class="body-post">
+                    <div class="post-title text-left fs-24 mb-2 line-clamp-1">
+                      {{ i.title }}
+                    </div>
+                    <div class="label mh-130 text-left line-clamp-3">{{ i.description }}</div>
+                  </div>
+                </a>
+              </Slide>
+            </Carousel>
+            <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev">
+              <img src="@/assets/img/arrow-left.png" alt="" />
+            </div>
+            <div class="absolute arrow-slide cursor-pointer right-arrow" @click="next">
+              <img src="@/assets/img/arrow-right.png" alt="" />
+            </div>
+          </div>
+          <div class="dao-ly stats notify p-12 text-white fs-36 flex items-center justify-center text-center">
+            <div>
+              <div class="mb-2">Luyên thi miễn phí trắc nghiệm công chức</div>
+              <div class="mb-2">Thời gian áp dụng:</div>
+              <div>15/01/2023 - 20/2/2023</div>
+            </div>
+          </div>
+        </div>
+        <animation-text-2 class="w-1/3 hide-column" />
       </div>
       <div id="features" class="featured">
         <div class="content">
@@ -296,7 +312,7 @@ onMounted(() => {
 .marquee-text {
   font-size: 24px;
   white-space: nowrap;
-  animation: marqueeAnimation 10s linear infinite;
+  animation: marqueeAnimation 12s linear infinite;
 }
 
 /* Animation for the marquee text */
@@ -339,7 +355,6 @@ onMounted(() => {
 
 /* ======== Featured ======== */
 .featured {
-  margin-top: 41px;
   padding: 110px 0;
 }
 
@@ -444,7 +459,6 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
   background-color: #1f0e00eb;
 }
 
@@ -504,8 +518,8 @@ onMounted(() => {
   font-size: 1.8rem;
 }
 
-.h-420 {
-  height: 420px;
+.h-300 {
+  height: 300px;
 }
 .arrow-slide {
   border-radius: 60px;
@@ -537,7 +551,6 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
   background-color: #1f0e00eb;
 }
 .working .sub-title {
@@ -628,15 +641,41 @@ onMounted(() => {
 .body-post {
   width: 100%;
   padding: 17px 20px 24px;
-  background: var(--gray-100, #fff);
+  background: #f3f4f6;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
 .carousel__item {
-  max-width: 600px;
+  max-width: max-content;
 }
 .mh-130 {
   max-height: 130px;
+}
+.wrap-news {
+  height: 675px !important;
+}
+.notify {
+  height: 245px !important;
+}
+.center-div {
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+@media screen and (max-width: 1180px) {
+  .wrap-news {
+    flex-direction: column;
+    height: max-content !important;
+  }
+  .news-column {
+    width: 100%;
+  }
+  .hide-column {
+    display: none;
+  }
+  .carousel__item {
+    max-width: 600px;
+  }
 }
 </style>

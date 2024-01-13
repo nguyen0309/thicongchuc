@@ -101,7 +101,7 @@ onMounted(() => {
           <a :href="`tel:${config.phone}`" class="contact">Liên hệ Zalo: {{ config.phone }}</a>
         </div>
       </div>
-      <div v-if="type == 'posts'" class="wrap-content h-full">
+      <div v-if="type == 'posts'" class="h-full">
         <div class="featured">
           <div class="fs-36 fw-600 text-black-700 mb-8">Tổng hợp tin tức</div>
           <div class="flex flex-col gap-4">

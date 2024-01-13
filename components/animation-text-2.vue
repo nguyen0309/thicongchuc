@@ -9,7 +9,7 @@
   <style scoped>
   .animation-bg {
     margin-top: -3px;
-    height: 548px;
+    height: 678px;
     position: relative;
     background: transparent url(@/assets/img/working_2.jpg) no-repeat center;
     background-size: cover;

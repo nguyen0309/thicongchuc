@@ -2,7 +2,6 @@
 import { useUsersService } from "@/services/users";
 
 const route = useRoute();
-console.log("route", route.path);
 const router = useRouter();
 const Menu = ref([
   {

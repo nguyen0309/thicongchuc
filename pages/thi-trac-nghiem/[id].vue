@@ -12,6 +12,7 @@ const answer = ref([]);
 const examEnd = ref(false);
 const time = ref("");
 const point = ref("");
+const topic = ref("");
 const timeWork = ref("");
 const page = ref(1);
 const limit = ref(60);
@@ -27,6 +28,7 @@ const startExam = async (id) => {
     if (res.list) {
       list.value = res.list;
       total_question.value = res.exam.total_question;
+      topic.value = res.topic.slug_id;
       const timeDifference = 60 * 60 * 1000 - (Date.now() - new Date(res.latest_history.start_time).getTime());
       const minutes = Math.floor(timeDifference / (1000 * 60));
       const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
@@ -105,26 +107,13 @@ onMounted(() => {
       <div v-else class="wrap-content h-full p-12">
         <div class="flex gap-5 md:flex-row sm:flex-col">
           <div class="flex md:flex-col md:w-1/6 sm:flex-row">
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/hai-quan.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/thue.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/kho-bac.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/quan-ly-nha-nuoc.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/thong-ke.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/bao-hiem-xa-hoi.jpg" alt="" />
-            </div>
-            <div class="flex justify-center items-center opacity-50">
-              <img class="thumb" src="@/assets/img/tieng-anh.jpg" alt="" />
+            <div
+              class="flex justify-center items-center opacity-50 mb-1"
+              v-for="i in listCategories"
+              :key="i.id"
+              :class="{ 'opacity-1': topic == i.slug_id }"
+            >
+              <img class="thumb" :src="i.img" alt="" />
             </div>
           </div>
           <div v-if="examEnd" class="md:w-5/6 sm:w-full">
@@ -255,7 +244,7 @@ onMounted(() => {
   </NuxtLayout>
 </template>
 
-<style>
+<style scoped>
 .wrap-content {
   padding: 48px;
   height: calc(100vh - 66px);
@@ -268,7 +257,7 @@ onMounted(() => {
   box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 .number {
-  width: 16.66666667%;
+  width: 12.5%;
   padding: 16px;
   background: var(--white, #fff);
   box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -315,9 +304,17 @@ onMounted(() => {
 .mw-640 {
   max-width: 640px;
 }
+.opacity-1 {
+  opacity: 1 !important;
+}
+@media screen and (max-width: 975px) {
+  .number {
+    width: 16.66666667%;
+  }
+}
 @media screen and (max-width: 767px) {
   .number {
-    width: 33.333333%;
+    width: 25%;
   }
 }
 </style>

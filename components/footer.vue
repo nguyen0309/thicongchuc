@@ -34,6 +34,13 @@ const open = ref(false);
           </ul>
         </div>
         <div class="column">
+          <h3 class="heading">Tài khoản ngân hàng</h3>
+          <ul class="list">
+            <div class="about-us text-black-700 text-justify">STK: 1012955333</div>
+            <div class="about-us text-black-700 text-justify item">Ngần hàng: Vietcombank</div>
+          </ul>
+        </div>
+        <div class="column">
           <h3 class="heading">Về chúng tôi</h3>
           <div class="list about-us text-black-700 text-justify">
             Website ôn thi Công chức, viên chức với người tài liệu phong phú với bề dày kinh nghiệm chúng tôi cam kết sẽ mang đến những trải nghiệm

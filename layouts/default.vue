@@ -61,12 +61,12 @@ onMounted(() => {
             </svg>
           </label>
           <a href="trang-chu">
-            <!-- <div class="logo fs-36 leading-8 text-black-700 fw-800">Thicongchuc24h</div> -->
+            <div class="logo"><img class="w-full h-full" src="@/assets/img/logo.png" alt="" /></div>
           </a>
           <ul id="pc-nav">
             <li><a class="title" href="/trang-chu">Trang chủ</a></li>
             <li class="relative" @mouseleave="hideMenu">
-              <a class="title" @mouseover="hoverShowMenu">Thi</a>
+              <a class="title" @mouseover="hoverShowMenu">Thi kiến thức chung</a>
               <div class="block-menu flex flex-col" v-if="showMenu">
                 <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
                 <a href="/hai-quan" class="p-4 cursor-pointer menu-title">Hải quan</a>
@@ -77,12 +77,14 @@ onMounted(() => {
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
             </li>
-            <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+            <li><a class="title" href="tai-lieu">Tài liệu ôn thi</a></li>
             <li><a class="title" href="tin-tuc">Tin tức</a></li>
             <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
+            <li><a class="title" href="thi-thu">Vào thi thử</a></li>
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
-            Xin chào, {{ user.name }}! <span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
+            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="admin" class="cursor-pointer text-yellow">[Quản lý]</a></span
+            ><span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
           </div>
           <div v-else class="actions">
             <a href="dang-ky" class="action-link">Đăng ký</a>
@@ -96,12 +98,15 @@ onMounted(() => {
       <label for="menu-checkbox" class="menu-overlay"></label>
       <div class="menu-drawer">
         <a href="trang-chu">
-          <!-- <div class="fs-36 leading-8 text-black-700 fw-800">Thicongchuc24h</div> -->
+          <div class="flex items-center gap-2">
+            <div class="logo"><img class="w-auto h-full" src="@/assets/img/logo.png" alt="" /></div>
+            <div class="fs-20 fw-500">Thicongchuc24h</div>
+          </div>
         </a>
         <ul id="mobile-nav">
           <li><a class="title" href="/trang-chu">Trang chủ</a></li>
           <li class="relative" @mouseover="hoverShowMenu" @mouseleave="hideMenu">
-            <a class="title">Thi</a>
+            <a class="title">Thi kiến thức chung</a>
             <div class="block-menu flex flex-col" v-if="showMenu">
               <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
               <a href="/hai-quan" class="p-4 cursor-pointer menu-title">Hải quan</a>
@@ -115,8 +120,10 @@ onMounted(() => {
           <li><a class="title" href="tai-lieu">Tài liệu</a></li>
           <li><a class="title" href="tin-tuc">Tin tức</a></li>
           <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
+          <li><a class="title" href="thi-thu">Vào thi thử</a></li>
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
+            <li v-if="user.role == 'admin'"><a href="admin" class="title">Quản lý</a></li>
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
           </div>
           <div v-else>
@@ -222,9 +229,12 @@ onMounted(() => {
   height: 64px;
 }
 
+.logo {
+  height: 64px;
+  width: auto;
+}
 .navbar ul {
   display: flex;
-  margin-left: 50px;
 }
 
 .navbar .actions {
@@ -236,6 +246,9 @@ onMounted(() => {
 
 .title {
   padding: 24px 12px;
+}
+.menu-title {
+  z-index: 11;
 }
 
 .navbar .action-link {
@@ -276,9 +289,10 @@ onMounted(() => {
   width: 185px;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   top: 40px;
+  z-index: 100;
   transition: 0.5s ease;
 } /* Tablet */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1151px) {
   .mobile-header {
     display: none;
   }
@@ -288,7 +302,7 @@ onMounted(() => {
   }
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1150px) {
   .navbar {
     position: relative;
   }
@@ -323,7 +337,7 @@ onMounted(() => {
     position: fixed;
     width: 300px;
     background: #fff;
-    z-index: 10;
+    z-index: 11;
     padding: 40px;
     transform: translateX(-100%);
     transition: 0.5s ease;
@@ -332,11 +346,12 @@ onMounted(() => {
     padding-right: 0;
   }
   .block-menu {
+    z-index: 100;
     top: 0;
     left: 260px;
   }
   .menu-drawer ul {
-    margin-top: 32px;
+    margin-top: 12px;
   }
 
   .title {
