@@ -5,8 +5,9 @@ import Footer from "../components/footer.vue";
 import { useCatgoriesService } from "@/services/categories";
 import { useSlugService } from "@/services/slug";
 import AnimationText from "@/components/animation-text.vue";
-import AnimationText2 from "@/components/animation-text-2.vue";
+import AnimationText3 from "@/components/animation-text-3.vue";
 import { useUsersService } from "@/services/users";
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const router = useRouter();
 const currentSlide = ref(0);
@@ -14,6 +15,7 @@ const listCategories = ref(0);
 const listPost = ref([]);
 const hotNews = ref({});
 const listRank = ref([]);
+const open = ref(false);
 const review = ref([
   {
     review: "Cảm ơn mọi người trong thời gian qua đã chỉ bảo và giúp đỡ tôi rất nhiều. Chúc mọi người đạt được nhiều thành công.",
@@ -139,17 +141,23 @@ onMounted(() => {
           </div>
         </a>
       </div>
-      <div class="dao-ly stats px-12 py-150 text-white fs-52">
-        <div>
+      <div @click="open = true" class="docs fs-30 fw-600 text-white flex items-center justify-start w-max p-12 gap-4">
+        <img class="w-24" src="@/assets/img/pow.gif" alt="" />
+        <div>Tài liệu đầy đủ từng ngành</div>
+        <img class="w-24" src="@/assets/img/pow.gif" alt="" />
+      </div>
+      <!-- <div class="dao-ly stats px-12 py-12 text-white fs-52 mb-12 flex items-center justify-center text-center">
+        <div class="mw">
           Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
         </div>
-      </div>
+      </div> -->
+      <animation-text-3 class="mb-12" />
       <div class="flex items-center wrap-news">
         <div class="flex flex-col w-1/3 h-full news-column">
-          <div class="dao-ly stats p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
+          <div class="dao-ly stats welcome p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
             <div>Chào mừng bạn đến với website Thicongchuc24h!</div>
           </div>
-          <div class="dao-ly stats p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
+          <div class="dao-ly stats book p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
             <div>Nơi tổng hợp kiến thức, tài liêu ôn thi các ngành, đề thi các năm</div>
           </div>
         </div>
@@ -177,7 +185,7 @@ onMounted(() => {
               <img src="@/assets/img/arrow-right.png" alt="" />
             </div>
           </div>
-          <div class="dao-ly stats notify p-12 text-white fs-36 flex items-center justify-center text-center">
+          <div class="dao-ly stats quiz notify p-12 text-white fs-36 flex items-center justify-center text-center">
             <div>
               <div class="mb-2">Luyên thi miễn phí trắc nghiệm công chức</div>
               <div class="mb-2">Thời gian áp dụng:</div>
@@ -185,7 +193,12 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <animation-text-2 class="w-1/3 hide-column" />
+        <div class="dao-ly stats contact p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center w-1/3 h-full">
+          <div>
+            Trợ giúp: Mọi thắc mắc của anh, chị xin hãy phản hồi cho chúng tôi qua số zalo:
+            <span @click="open = true" class="text-yellow underline cursor-pointer">0844311767</span>
+          </div>
+        </div>
       </div>
       <div id="features" class="featured">
         <div class="content">
@@ -284,6 +297,43 @@ onMounted(() => {
       </div>
     </main>
     <Footer></Footer>
+    <TransitionRoot as="template" :show="open">
+      <Dialog as="div" class="relative z-10" @close="open = false">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter-to="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100 translate-y-0 sm:scale-100"
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-10 text-left shadow-xl transition-all">
+                <div class="mb-4 fs-16">Liên hệ tới zalo: <span class="text-yellow underline"> 0844311767</span></div>
+                <div class="flex items-center justify-center"><img class="modal mb-3" src="@/assets/img/contact-zalo.jpg" alt="" /></div>
+                <div class="flex justify-end">
+                  <div class="cursor-pointer" @click="open = false">Thoát</div>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </NuxtLayout>
 </template>
 <style lang="scss" scoped>
@@ -451,6 +501,18 @@ onMounted(() => {
   position: relative;
   background: transparent url(@/assets/img/working.png) no-repeat center;
   background-size: cover;
+}
+.welcome {
+  background: transparent url(@/assets/img/welcome.jpg) no-repeat center !important;
+}
+.book {
+  background: transparent url(@/assets/img/book.jpg) no-repeat center !important;
+}
+.contact {
+  background: transparent url(@/assets/img/contact.jpg) no-repeat center !important;
+}
+.quiz {
+  background: transparent url(@/assets/img/quiz.jpg) no-repeat center !important;
 }
 .stats::before {
   content: "";
@@ -644,6 +706,7 @@ onMounted(() => {
   background: #f3f4f6;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  height: 130px;
 }
 
 .carousel__item {
@@ -677,5 +740,15 @@ onMounted(() => {
   .carousel__item {
     max-width: 600px;
   }
+}
+.mw {
+  max-width: 770px;
+}
+.modal {
+  width: 300px;
+}
+.docs {
+  background: #ff9100;
+  cursor: pointer;
 }
 </style>

@@ -162,6 +162,7 @@ onMounted(() => {
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-8 text-left shadow-xl transition-all mw-640">
+                <div class="mb-4 fs-16">Liên hệ tới zalo: <span class="text-yellow underline"> 0844311767</span></div>
                 <div class="flex items-center justify-center"><img class="mb-3 mt-3 contact-zalo" src="@/assets/img/contact-zalo.jpg" alt="" /></div>
                 <div class="flex justify-end">
                   <div class="cursor-pointer" @click="open = false">Thoát</div>
@@ -268,10 +269,11 @@ onMounted(() => {
   height: 64px;
   position: fixed;
   right: 30px;
-  bottom: 120px;
+  bottom: 60px;
   z-index: 5;
   cursor: pointer;
 }
+
 .icon-facebook {
   width: 64px;
   height: 64px;
