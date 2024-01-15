@@ -167,7 +167,7 @@ onMounted(() => {
               <Slide v-for="i in listPost" :key="i">
                 <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
                   <div class="h-300 w-full rounded-lg">
-                    <img class="h-300 w-full" :src="i.img" alt="Besnik." />
+                    <img class="h-300 w-full" :src="i.img" :alt="i.title" />
                   </div>
                   <div class="body-post">
                     <div class="post-title text-left fs-24 mb-2 line-clamp-1">
@@ -193,7 +193,9 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div class="dao-ly stats contact p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center w-1/3 h-full">
+        <div
+          class="dao-ly stats contact p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center w-1/3 h-full news-column"
+        >
           <div>
             Trợ giúp: Mọi thắc mắc của anh, chị xin hãy phản hồi cho chúng tôi qua số zalo:
             <span @click="open = true" class="text-yellow underline cursor-pointer">0844311767</span>
