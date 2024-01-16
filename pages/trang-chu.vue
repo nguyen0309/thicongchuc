@@ -133,79 +133,9 @@ onMounted(() => {
 <template>
   <NuxtLayout>
     <main>
-      <!-- <div class="marquee-container py-6 white-bg" v-if="listPost.length > 0" @click="router.push(hotNews.slug.slug)">
-        <a :href="`${hotNews.slug.slug}`">
-          <div class="flex gap-2 items-center marquee-text">
-            <img class="w-24" src="@/assets/img/fire.png" alt="" />
-            <div class="text-red-500">{{ hotNews.title }}</div>
-            <img class="w-24" src="@/assets/img/fire.png" alt="" />
-          </div>
-        </a>
-      </div>
-      <div @click="open = true" class="docs fs-30 fw-600 text-white flex items-center justify-start w-max p-12 gap-4">
-        <img class="w-24" src="@/assets/img/pow.gif" alt="" />
-        <div>Tài liệu đầy đủ từng ngành</div>
-        <img class="w-24" src="@/assets/img/pow.gif" alt="" />
-      </div> -->
-      <!-- <div class="dao-ly stats px-12 py-12 text-white fs-52 mb-12 flex items-center justify-center text-center">
-        <div class="mw">
-          Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
-        </div>
-      </div> -->
-      <!-- <animation-text-3 class="mb-12" />
-      <div class="flex items-center wrap-news">
-        <div class="flex flex-col w-1/3 h-full news-column">
-          <div class="dao-ly stats welcome p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
-            <div>Chào mừng bạn đến với website Thicongchuc24h!</div>
-          </div>
-          <div class="dao-ly stats book p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
-            <div>Nơi tổng hợp kiến thức, tài liêu ôn thi các ngành, đề thi các năm</div>
-          </div>
-        </div> -->
-      <!-- <div class="flex flex-col w-1/3 news-column">
-          <div class="relative rounded-lg">
-            <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
-              <Slide v-for="i in listPost" :key="i">
-                <a class="flex flex-col w-full items-center carousel__item" :href="`/${i.slug.slug}`">
-                  <div class="h-300 w-full rounded-lg">
-                    <img class="h-300 w-full" :src="i.img" :alt="i.title" />
-                  </div>
-                  <div class="body-post">
-                    <div class="post-title text-left fs-24 mb-2 line-clamp-1">
-                      {{ i.title }}
-                    </div>
-                    <div class="label mh-130 text-left line-clamp-3">{{ i.description }}</div>
-                  </div>
-                </a>
-              </Slide>
-            </Carousel>
-            <div class="absolute arrow-slide cursor-pointer left-arrow" @click="prev">
-              <img src="@/assets/img/arrow-left.png" alt="" />
-            </div>
-            <div class="absolute arrow-slide cursor-pointer right-arrow" @click="next">
-              <img src="@/assets/img/arrow-right.png" alt="" />
-            </div>
-          </div>
-          <div class="dao-ly stats quiz notify p-12 text-white fs-36 flex items-center justify-center text-center">
-            <div>
-              <div class="mb-2">Luyên thi miễn phí trắc nghiệm công chức</div>
-              <div class="mb-2">Thời gian áp dụng:</div>
-              <div>15/01/2023 - 20/2/2023</div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="dao-ly stats contact p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center w-1/3 h-full news-column"
-        >
-          <div>
-            Trợ giúp: Mọi thắc mắc của anh, chị xin hãy phản hồi cho chúng tôi qua số zalo:
-            <span @click="open = true" class="text-yellow underline cursor-pointer">0844311767</span>
-          </div>
-        </div>
-      </div> -->
       <div class="dao-ly stats book p-12 text-white fs-36 text-left h-screen relative">
-        <div class="absolute center-div">
-          <div class="fs-50 mb-8">Nơi hệ thống kiến thức, ôn thi trắc nghiệm công chức trên nền tảng trực tuyến.</div>
+        <div class="absolute center-div container">
+          <div class="fs-50 mb-8">Hệ thống kiến thức, ôn thi trắc nghiệm công chức trên nền tảng trực tuyến.</div>
           <div class="fs-20 mb-8">
             Ngân hàng tài liệu ôn thi công chức chất lượng được soạn thảo, tuyển chọn, rà soát kỹ lưỡng đảm bảo cung cấp kiến thức đầy đủ phục vụ kỳ
             thi.
@@ -700,6 +630,17 @@ onMounted(() => {
     align-items: center;
     row-gap: 60px;
   }
+  .book {
+    // height: max-content;
+    margin: auto;
+  }
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
 .w-300 {
   width: 300px;
@@ -740,6 +681,7 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+  max-width: 715px;
 }
 @media screen and (max-width: 1180px) {
   .wrap-news {

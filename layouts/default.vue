@@ -216,7 +216,7 @@ onMounted(() => {
 
 /* ======== Header ======== */
 .fixed-header {
-  background: #f2bb16;
+  background: #fc7e14;
   padding-top: 1px;
   position: sticky;
   top: -1px;
