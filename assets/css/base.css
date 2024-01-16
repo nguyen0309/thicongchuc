@@ -320,6 +320,9 @@ input:focus {
 .fs-18 {
   font-size: 18px;
 }
+.fs-20 {
+  font-size: 20px;
+}
 .fs-24 {
   font-size: 24px;
 }
@@ -331,6 +334,9 @@ input:focus {
 }
 .fs-36 {
   font-size: 36px;
+}
+.fs-50 {
+  font-size: 50px;
 }
 .fs-52 {
   font-size: 52px;

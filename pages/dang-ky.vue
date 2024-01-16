@@ -2,10 +2,14 @@
 import WebButton from "@/components/button.vue";
 import { useAuthService } from "@/services/auth";
 import { validateEmail } from "@/library/helper.js";
+import Success from "@/components/success.vue";
 
 const email = ref("");
 const name = ref("");
 const password = ref("");
+
+const router = useRouter();
+const success = ref(false);
 
 const errorEmail = ref("");
 const errorName = ref("");
@@ -33,7 +37,10 @@ const signUp = async () => {
 
     const res = await useAuthService().signUp(email.value, name.value, password.value);
     if (res.data) {
-      router.push('/dang-nhap')
+      success.value = true;
+      setTimeout(() => {
+        router.push("/dang-nhap");
+      }, 2000);
     } else {
       errorEmail.value = "Email đã tồn tại!";
     }
@@ -50,6 +57,7 @@ const clearError = () => {
 </script>
 <template>
   <div class="relative w-full h-screen">
+    <success :text="'Đăng ký thành công'" v-if="success" />
     <div class="absolute modal white-bg py-8 px-10">
       <div class="leading-10 fw-800 fs-36 text-black mb-10">Đăng ký</div>
       <div class="fs-14 leading-5 fw-500 mb-2 text-gray-700">Email <span class="text-red-700">*</span></div>

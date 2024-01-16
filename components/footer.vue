@@ -36,7 +36,8 @@ const open = ref(false);
         <div class="column">
           <h3 class="heading">Tài khoản ngân hàng</h3>
           <ul class="list">
-            <div class="about-us text-black-700 text-justify">STK: 1012955333</div>
+            <div class="about-us text-black-700 text-justify">Chủ tài khoản: Lê Đình Nam</div>
+            <div class="about-us text-black-700 text-justify item">STK: 1012955333</div>
             <div class="about-us text-black-700 text-justify item">Ngần hàng: Vietcombank</div>
           </ul>
         </div>
@@ -96,8 +97,8 @@ const open = ref(false);
   width: 300px;
 }
 .footer {
-  margin-top: 55px;
-  padding: 50px 48px 58px;
+  /* margin-top: 55px; */
+  padding: 0px 48px 58px;
 }
 .about-us {
   max-width: 300px;

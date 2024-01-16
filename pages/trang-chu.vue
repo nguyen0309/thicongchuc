@@ -8,6 +8,7 @@ import AnimationText from "@/components/animation-text.vue";
 import AnimationText3 from "@/components/animation-text-3.vue";
 import { useUsersService } from "@/services/users";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
+import config from "@/config";
 
 const router = useRouter();
 const currentSlide = ref(0);
@@ -132,7 +133,7 @@ onMounted(() => {
 <template>
   <NuxtLayout>
     <main>
-      <div class="marquee-container py-6 white-bg" v-if="listPost.length > 0" @click="router.push(hotNews.slug.slug)">
+      <!-- <div class="marquee-container py-6 white-bg" v-if="listPost.length > 0" @click="router.push(hotNews.slug.slug)">
         <a :href="`${hotNews.slug.slug}`">
           <div class="flex gap-2 items-center marquee-text">
             <img class="w-24" src="@/assets/img/fire.png" alt="" />
@@ -145,13 +146,13 @@ onMounted(() => {
         <img class="w-24" src="@/assets/img/pow.gif" alt="" />
         <div>Tài liệu đầy đủ từng ngành</div>
         <img class="w-24" src="@/assets/img/pow.gif" alt="" />
-      </div>
+      </div> -->
       <!-- <div class="dao-ly stats px-12 py-12 text-white fs-52 mb-12 flex items-center justify-center text-center">
         <div class="mw">
           Cách tốt nhất để <span class="text-yellow">dự đoán tương lai</span> là ngay từ bây giờ hãy <span class="text-yellow">tạo ra nó</span>.
         </div>
       </div> -->
-      <animation-text-3 class="mb-12" />
+      <!-- <animation-text-3 class="mb-12" />
       <div class="flex items-center wrap-news">
         <div class="flex flex-col w-1/3 h-full news-column">
           <div class="dao-ly stats welcome p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
@@ -160,8 +161,8 @@ onMounted(() => {
           <div class="dao-ly stats book p-12 text-white fs-36 text-center h-1/2 flex items-center justify-center text-center">
             <div>Nơi tổng hợp kiến thức, tài liêu ôn thi các ngành, đề thi các năm</div>
           </div>
-        </div>
-        <div class="flex flex-col w-1/3 news-column">
+        </div> -->
+      <!-- <div class="flex flex-col w-1/3 news-column">
           <div class="relative rounded-lg">
             <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide">
               <Slide v-for="i in listPost" :key="i">
@@ -200,6 +201,16 @@ onMounted(() => {
             Trợ giúp: Mọi thắc mắc của anh, chị xin hãy phản hồi cho chúng tôi qua số zalo:
             <span @click="open = true" class="text-yellow underline cursor-pointer">0844311767</span>
           </div>
+        </div>
+      </div> -->
+      <div class="dao-ly stats book p-12 text-white fs-36 text-left h-screen relative">
+        <div class="absolute center-div">
+          <div class="fs-50 mb-8">Nơi hệ thống kiến thức, ôn thi trắc nghiệm công chức trên nền tảng trực tuyến.</div>
+          <div class="fs-20 mb-8">
+            Ngân hàng tài liệu ôn thi công chức chất lượng được soạn thảo, tuyển chọn, rà soát kỹ lưỡng đảm bảo cung cấp kiến thức đầy đủ phục vụ kỳ
+            thi.
+          </div>
+          <div class="fs-18">Liên hệ: {{ config.phone }}</div>
         </div>
       </div>
       <div id="features" class="featured">
@@ -279,7 +290,7 @@ onMounted(() => {
           </div>
         </ClientOnly>
       </div>
-      <div id="resources" class="stats px-12 py-150">
+      <!-- <div id="resources" class="stats px-12 py-150">
         <div class="content z-10">
           <div class="row row-qty" id="list-counter">
             <div class="qty-item text-center">
@@ -296,7 +307,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </main>
     <Footer></Footer>
     <TransitionRoot as="template" :show="open">
@@ -407,7 +418,7 @@ onMounted(() => {
 
 /* ======== Featured ======== */
 .featured {
-  padding: 110px 0;
+  padding: 80px 0;
 }
 
 .featured .sub-title {
@@ -509,6 +520,8 @@ onMounted(() => {
 }
 .book {
   background: transparent url(@/assets/img/book.jpg) no-repeat center !important;
+  height: calc(100vh - 56px);
+  background-size: 100% 100% !important;
 }
 .contact {
   background: transparent url(@/assets/img/contact.jpg) no-repeat center !important;

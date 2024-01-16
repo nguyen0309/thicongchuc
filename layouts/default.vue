@@ -78,16 +78,16 @@ onMounted(() => {
               </div>
             </li>
             <li><a class="title" href="tai-lieu">Tài liệu ôn thi</a></li>
-            <li><a class="title" href="tin-tuc">Tin tức</a></li>
+            <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
             <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
             <li><a class="title" href="thi-thu">Vào thi thử</a></li>
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
-            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="admin" class="cursor-pointer text-yellow">[Quản lý]</a></span
+            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="admin" class="cursor-pointer text-white">[Quản lý]</a></span
             ><span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
           </div>
           <div v-else class="actions">
-            <a href="dang-ky" class="action-link">Đăng ký</a>
+            <!-- <a href="dang-ky" class="action-link">Đăng ký</a> -->
             <a href="dang-nhap" class="btn action-btn">Đăng nhập</a>
           </div>
         </nav>
@@ -118,7 +118,7 @@ onMounted(() => {
             </div>
           </li>
           <li><a class="title" href="tai-lieu">Tài liệu</a></li>
-          <li><a class="title" href="tin-tuc">Tin tức</a></li>
+          <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
           <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
           <li><a class="title" href="thi-thu">Vào thi thử</a></li>
           <div v-if="Object.keys(user).length > 0 && user.name">
@@ -127,7 +127,7 @@ onMounted(() => {
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
           </div>
           <div v-else>
-            <li><a class="title" href="dang-ky">Đăng ký</a></li>
+            <!-- <li><a class="title" href="dang-ky">Đăng ký</a></li> -->
             <li><a class="title" href="dang-nhap">Đăng nhập</a></li>
           </div>
         </ul>
@@ -216,7 +216,7 @@ onMounted(() => {
 
 /* ======== Header ======== */
 .fixed-header {
-  background: #fff7f0;
+  background: #f2bb16;
   padding-top: 1px;
   position: sticky;
   top: -1px;
@@ -227,11 +227,11 @@ onMounted(() => {
   display: flex;
   align-items: center;
   padding: 12px 0;
-  height: 64px;
+  height: 56px;
 }
 
 .logo {
-  height: 64px;
+  height: 56px;
   width: auto;
 }
 .navbar ul {

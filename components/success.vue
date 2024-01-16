@@ -3,7 +3,7 @@ const props = defineProps(["text"]);
 </script>
 <template>
   <div class="toast-notify flex gap-2 p-4">
-    <img class="img" src="@/assets/img/success.png" />
+    <img class="w-16" src="@/assets/img/success.png" />
     <div class="text">{{ props.text }}</div>
   </div>
 </template>
