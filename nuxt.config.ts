@@ -10,6 +10,11 @@ export default defineNuxtConfig({
   // devServer: {
   //   port: 3001,
   // },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['ckeditor'].includes(tag),
+    },
+  },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   postcss: {
