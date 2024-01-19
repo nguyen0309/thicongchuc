@@ -6,12 +6,16 @@ const list = ref([]);
 const search = ref("");
 const listTopic = [1, 2, 4, 5, 6, 7, 8];
 const open = ref(false);
+const limit = ref(10);
+const page = ref(1);
+const total = ref(0);
 
 const getListUser = async () => {
   try {
-    const res = await useAdminService().getListUser(search.value);
+    const res = await useAdminService().getListUser({}, limit.value, page.value, search.value);
     if (res) {
       list.value = res.list;
+      total.value = res.total;
     }
   } catch (e) {
     console.log(e);
@@ -30,6 +34,10 @@ const createTransaction = async (user_id) => {
     console.log(e);
   }
 };
+
+watch(page, () => {
+  getListUser();
+});
 definePageMeta({
   layout: "admin",
 });
@@ -49,7 +57,7 @@ onMounted(() => {
             <button class="find" @click="getListUser">Tìm kiếm</button>
           </div>
         </div>
-        <table>
+        <table class="mb-12">
           <tr>
             <th>STT</th>
             <th>Email</th>
@@ -65,13 +73,16 @@ onMounted(() => {
             </td>
           </tr>
         </table>
+        <div class="flex justify-end gap-3">
+          <button v-if="page > 1" cursor-pointer @click="page--" class="find">Previous</button>
+          <button v-if="limit * page < total" @click="page++" class="find">Next</button>
+        </div>
       </div>
     </NuxtLayout>
   </ClientOnly>
 </template>
 <style>
 .find {
-  width: 100%;
   font-size: 16px;
   background-color: #ff9100;
   color: #fff;

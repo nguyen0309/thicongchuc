@@ -29,10 +29,7 @@ const startExam = async (id) => {
       list.value = res.list;
       total_question.value = res.exam.total_question;
       topic.value = res.topic.slug_id;
-      const timeDifference = 60 * 60 * 1000 - (Date.now() - new Date(res.latest_history.start_time).getTime());
-      const minutes = Math.floor(timeDifference / (1000 * 60));
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-      updateCountdown(minutes, seconds);
+      updateCountdown(60, 0);
     }
     loading.value = false;
   } catch (e) {
@@ -63,7 +60,7 @@ const onChange = (qid, aid) => {
   } else {
     form.value.push(newObject);
   }
-  console.log(form.value);
+  // console.log(form.value);
 };
 const getCategories = async () => {
   try {
@@ -106,9 +103,9 @@ onMounted(() => {
       <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
       <div v-else class="wrap-content h-full p-12">
         <div class="flex gap-5 md:flex-row sm:flex-col">
-          <div class="flex md:flex-col md:w-1/6 sm:flex-row">
+          <div class="flex md:flex-col md:w-max sm:flex-row md:items-center sm:justify-center">
             <div
-              class="flex justify-center items-center opacity-50 mb-1"
+              class="flex justify-center items-center opacity-50 mb-1 w-max"
               v-for="i in listCategories"
               :key="i.id"
               :class="{ 'opacity-1': topic == i.slug_id }"
@@ -116,7 +113,7 @@ onMounted(() => {
               <img class="thumb" :src="i.img" alt="" />
             </div>
           </div>
-          <div v-if="examEnd" class="md:w-5/6 sm:w-full">
+          <div v-if="examEnd" class="w-full">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-1/2 block flex flex-col items-center p-6">
                 <div class="fs-18 fw-600 text-black-700 mb-1">Điểm của bạn:</div>
@@ -147,7 +144,7 @@ onMounted(() => {
                   >{{ answer.title }}</label
                 >
               </div>
-              <div class="fs-14 text-justify italic fw-600 text-black-700 mt-4">Gợi ý: {{ i.recommend }}</div>
+              <div v-if="i.recommend" class="fs-14 text-justify italic fw-600 text-black-700 mt-4">Gợi ý: {{ i.recommend }}</div>
             </div>
             <div class="flex flex-wrap justify-start overflow-hidden rounded-xl w-full">
               <div
@@ -161,7 +158,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          <div v-else class="md:w-5/6 sm:w-full">
+          <div v-else class="w-full">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-1/2 block flex flex-col items-center p-6">
                 <div class="fs-18 fw-600 text-black-700 mb-1">Số câu hỏi đã trả lời:</div>
@@ -191,7 +188,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="flex justify-end mt-8"><button :disabled="form.length == 0" class="contact" @click="endExam">Nạp bài</button></div>
+            <div class="flex justify-end mt-8"><button class="contact" @click="endExam">Nạp bài</button></div>
           </div>
         </div>
         <TransitionRoot as="template" :show="open">
@@ -246,7 +243,7 @@ onMounted(() => {
 
 <style scoped>
 .wrap-content {
-  padding: 48px;
+  padding: 24px;
   height: calc(100vh - 66px);
   overflow-y: auto;
 }
@@ -283,7 +280,6 @@ onMounted(() => {
   color: #fff;
   width: 20%;
 }
-
 .bg-green {
   background: #9dc175 !important;
   color: #fff;
@@ -299,7 +295,7 @@ onMounted(() => {
 }
 .thumb {
   width: auto;
-  height: 100px;
+  height: 80px;
 }
 .mw-640 {
   max-width: 640px;

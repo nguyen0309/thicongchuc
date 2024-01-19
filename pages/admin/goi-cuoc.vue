@@ -1,6 +1,5 @@
 <script setup>
 import { useAdminService } from "@/services/admin";
-import Success from "@/components/success.vue";
 import DeleteTransaction from "@/pages/admin/components/deleteTransaction.vue";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 

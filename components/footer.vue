@@ -25,11 +25,11 @@ const open = ref(false);
           <ul class="list">
             <li class="flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/telephone.png" alt="" />
-              <a class="text-black-700" :href="`tel:${config.phone}`">{{ config.phone }}</a>
+              <a class="text-black-700">{{ config.phone }}</a>
             </li>
             <li class="item flex items-center gap-2">
               <img class="w-8 h-8" src="@/assets/img/mail.png" alt="" />
-              <a class="text-black-700" href="`mailto::${config.mail}`">{{ config.mail }}</a>
+              <a class="text-black-700" :href="`mailto::${config.mail}`">{{ config.mail }}</a>
             </li>
           </ul>
         </div>

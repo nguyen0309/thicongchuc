@@ -4,14 +4,10 @@ import "vue3-carousel/dist/carousel.css";
 import Footer from "../components/footer.vue";
 import { useCatgoriesService } from "@/services/categories";
 import { useSlugService } from "@/services/slug";
-import AnimationText from "@/components/animation-text.vue";
-import AnimationText3 from "@/components/animation-text-3.vue";
 import { useUsersService } from "@/services/users";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 import config from "@/config";
 
-const router = useRouter();
-const currentSlide = ref(0);
 const listCategories = ref(0);
 const listPost = ref([]);
 const hotNews = ref({});
@@ -36,54 +32,7 @@ const review = ref([
     work: "Kho bạc Nhà nước tỉnh Long An",
   },
 ]);
-const tables = ref([
-  { user_name: "kyluc", exam_score: 10, time_diff: "00:10:58", topic_title: "Hải Quan" },
-  { user_name: "Lê Thị Khoa", exam_score: 10, time_diff: "00:11:35", topic_title: "Tiếng Anh" },
-  { user_name: "sieunhan_zzz", exam_score: 10, time_diff: "00:13:53", topic_title: "Kho bạc nhà nước" },
-  { user_name: "account", exam_score: 10, time_diff: "00:14:42", topic_title: "Ngân hàng nhà nước" },
-  { user_name: "thuykhoa", exam_score: 10, time_diff: "00:15:24", topic_title: "Kho bạc nhà nước" },
-  { user_name: "Nguyễn Lê Na", exam_score: 10, time_diff: "00:17:24", topic_title: "Thuế" },
-  { user_name: "checkzzz@@@", exam_score: 10, time_diff: "00:18:24", topic_title: "Thuế" },
-  { user_name: "Đinh Minh Thư", exam_score: 10, time_diff: "00:19:24", topic_title: "Thống kê" },
-  { user_name: "meowmeow", exam_score: 10, time_diff: "00:20:43", topic_title: "Bảo hiểm xã hội" },
-  { user_name: "La Thị Hà", exam_score: 10, time_diff: "00:21:53", topic_title: "Bảo hiểm xã hội" },
-  { user_name: "sweet@@@", exam_score: 10, time_diff: "00:22:21", topic_title: "Tiếng Anh" },
-]);
 
-const counters = {
-  counter_1: { current: 0, target: 500, increment: 10 },
-  counter_2: { current: 0, target: 5000, increment: 100 },
-  counter_3: { current: 0, target: 300, increment: 6 },
-};
-
-const updateCounter = (counterId) => {
-  if (process.client) {
-    let counterElement = document.getElementById(counterId);
-    counterElement.textContent = counters[counterId].current + "+";
-  }
-};
-
-const animateCounter = (counterId) => {
-  const counter = counters[counterId];
-  const animationInterval = setInterval(() => {
-    counter.current += counter.increment;
-    updateCounter(counterId);
-
-    if (counter.current >= counter.target) {
-      counter.current = counter.target;
-      updateCounter(counterId);
-      clearInterval(animationInterval);
-      return;
-    }
-  }, 50);
-};
-
-const next = () => {
-  currentSlide.value++;
-};
-const prev = () => {
-  currentSlide.value--;
-};
 const getCategories = async () => {
   try {
     const res = await useCatgoriesService().list({ types: ["exam"] });
@@ -123,11 +72,6 @@ onMounted(() => {
   getCategories();
   getPost();
   getListRank();
-  setTimeout(() => {
-    animateCounter("counter_1");
-    animateCounter("counter_2");
-    animateCounter("counter_3");
-  }, 1000);
 });
 </script>
 <template>

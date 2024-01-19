@@ -4,19 +4,26 @@ import { useAuthService } from "@/services/auth";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const showMenu = ref(false);
+const showMenu2 = ref(false);
 const user = ref({});
 const loading = ref(false);
 const router = useRouter();
 const route = useRoute();
 const open = ref(false);
 
-const hoverShowMenu = () => {
-  showMenu.value = true;
+const hoverShowMenu = (index) => {
+  if (index == 1) showMenu.value = true;
+  if (index == 2) showMenu2.value = true;
 };
-const hideMenu = () => {
-  setTimeout(() => {
-    showMenu.value = false;
-  }, 1000);
+const hideMenu = (index) => {
+  if (index == 1)
+    setTimeout(() => {
+      showMenu.value = false;
+    }, 1000);
+  if (index == 2)
+    setTimeout(() => {
+      showMenu2.value = false;
+    }, 1000);
 };
 const getUser = async () => {
   try {
@@ -52,21 +59,24 @@ onMounted(() => {
     <header class="fixed-header">
       <div class="content">
         <nav class="navbar">
-          <label for="menu-checkbox" class="toggle-menu cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-              <path
-                fill="currentColor"
-                d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
-              />
-            </svg>
-          </label>
+          <div class="flex items-center gap-3">
+            <label for="menu-checkbox" class="toggle-menu">
+              <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  fill="currentColor"
+                  d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
+                />
+              </svg>
+            </label>
+            <div class="fs-20 fw-500 text-white web-name">Thicongchuc24h</div>
+          </div>
           <a href="trang-chu">
             <div class="logo"><img class="w-full h-full" src="@/assets/img/logo.png" alt="" /></div>
           </a>
           <ul id="pc-nav">
-            <li><a class="title" href="/trang-chu">Trang chủ</a></li>
-            <li class="relative" @mouseleave="hideMenu">
-              <a class="title" @mouseover="hoverShowMenu">Thi kiến thức chung</a>
+            <li class="flex items-center pr-3"><a class="title" href="/trang-chu">Trang chủ</a></li>
+            <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(1)" @mouseover="hoverShowMenu(1)">
+              <a class="title">Thi kiến thức chung</a>
               <div class="block-menu flex flex-col" v-if="showMenu">
                 <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
                 <a href="/hai-quan" class="p-4 cursor-pointer menu-title">Hải quan</a>
@@ -76,11 +86,25 @@ onMounted(() => {
                 <a href="/thue" class="p-4 cursor-pointer menu-title">Thuế</a>
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
+              <img class="w-4 h-4" src="@/assets/img/arrow-down.png" alt="" />
             </li>
-            <li><a class="title" href="tai-lieu">Tài liệu ôn thi</a></li>
+            <li class="flex items-center pr-3"><a class="title" href="tai-lieu">Tài liệu ôn thi</a></li>
             <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
-            <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
-            <li><a class="title" href="thi-thu">Vào thi thử</a></li>
+            <li class="flex items-center pr-3"><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
+            <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
+              <a class="title">Thi thử</a>
+              <div class="block-menu flex flex-col" v-if="showMenu2">
+                <a href="/bao-hiem-xa-hoi?type=free" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
+                <a href="/hai-quan?type=free" class="p-4 cursor-pointer menu-title">Hải quan</a>
+                <a href="/kho-bac-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
+                <a href="/ngan-hang-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
+                <a href="/thong-ke?type=free" class="p-4 cursor-pointer menu-title">Thống kê</a>
+                <a href="/thue?type=free" class="p-4 cursor-pointer menu-title">Thuế</a>
+                <a href="/tieng-anh?type=free" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
+              </div>
+              <img class="w-4 h-4" src="@/assets/img/arrow-down.png" alt="" />
+            </li>
+            <!-- <li class="flex items-center pr-3"><a class="title" href="thi-thu">Vào thi thử</a></li> -->
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
             Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="admin" class="cursor-pointer text-white">[Quản lý]</a></span
@@ -105,7 +129,7 @@ onMounted(() => {
         </a>
         <ul id="mobile-nav">
           <li><a class="title" href="/trang-chu">Trang chủ</a></li>
-          <li class="relative" @mouseover="hoverShowMenu" @mouseleave="hideMenu">
+          <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(1)" @mouseover="hoverShowMenu(1)">
             <a class="title">Thi kiến thức chung</a>
             <div class="block-menu flex flex-col" v-if="showMenu">
               <a href="/bao-hiem-xa-hoi" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
@@ -120,7 +144,19 @@ onMounted(() => {
           <li><a class="title" href="tai-lieu">Tài liệu</a></li>
           <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
           <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
-          <li><a class="title" href="thi-thu">Vào thi thử</a></li>
+          <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
+            <a class="title">Thi thử</a>
+            <div class="block-menu flex flex-col" v-if="showMenu2">
+              <a href="/bao-hiem-xa-hoi?type=free" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
+              <a href="/hai-quan?type=free" class="p-4 cursor-pointer menu-title">Hải quan</a>
+              <a href="/kho-bac-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
+              <a href="/ngan-hang-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
+              <a href="/thong-ke?type=free" class="p-4 cursor-pointer menu-title">Thống kê</a>
+              <a href="/thue?type=free" class="p-4 cursor-pointer menu-title">Thuế</a>
+              <a href="/tieng-anh?type=free" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
+            </div>
+          </li>
+          <!-- <li><a class="title" href="thi-thu">Vào thi thử</a></li> -->
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
             <li v-if="user.role == 'admin'"><a href="admin" class="title">Quản lý</a></li>
@@ -162,7 +198,7 @@ onMounted(() => {
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-8 text-left shadow-xl transition-all mw-640">
-                <div class="mb-4 fs-16">Liên hệ tới zalo: <span class="text-yellow underline"> 0844311767</span></div>
+                <div class="mb-4 fs-16">Liên hệ tới zalo: <span class="text-yellow underline">0844311767</span></div>
                 <div class="flex items-center justify-center"><img class="mb-3 mt-3 contact-zalo" src="@/assets/img/contact-zalo.jpg" alt="" /></div>
                 <div class="flex justify-end">
                   <div class="cursor-pointer" @click="open = false">Thoát</div>
@@ -246,7 +282,7 @@ onMounted(() => {
 }
 
 .title {
-  padding: 24px 12px;
+  padding: 20px 0px 20px 12px;
 }
 .menu-title {
   z-index: 11;
@@ -287,13 +323,16 @@ onMounted(() => {
   position: absolute;
   height: max-content;
   // border-radius: 6px;
-  background: var(--white, #fff);
-  width: 185px;
+  background: var(--white, #fff7f0);
+  width: 200px;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-  top: 40px;
+  top: 56px;
   z-index: 100;
   transition: 0.5s ease;
 } /* Tablet */
+.web-name {
+  display: none;
+}
 @media screen and (min-width: 1151px) {
   .mobile-header {
     display: none;
@@ -307,6 +346,10 @@ onMounted(() => {
 @media screen and (max-width: 1150px) {
   .navbar {
     position: relative;
+  }
+
+  .web-name {
+    display: block;
   }
 
   .navbar .logo {
@@ -412,13 +455,17 @@ onMounted(() => {
     left: 260px;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
+  .content {
+    padding: 0 16px;
+  }
   .navbar .user-name {
     display: none;
   }
 }
 
 .menu-title:hover {
-  font-weight: 700;
+  // font-weight: 700;
+  background: #f3d25a;
 }
 </style>

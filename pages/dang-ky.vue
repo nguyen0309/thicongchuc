@@ -2,14 +2,15 @@
 import WebButton from "@/components/button.vue";
 import { useAuthService } from "@/services/auth";
 import { validateEmail } from "@/library/helper.js";
-import Success from "@/components/success.vue";
+import Success from "@/pages/components/registration-success.vue";
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const email = ref("");
 const name = ref("");
 const password = ref("");
 
 const router = useRouter();
-const success = ref(false);
+const open = ref(false);
 
 const errorEmail = ref("");
 const errorName = ref("");
@@ -37,10 +38,7 @@ const signUp = async () => {
 
     const res = await useAuthService().signUp(email.value, name.value, password.value);
     if (res.data) {
-      success.value = true;
-      setTimeout(() => {
-        router.push("/dang-nhap");
-      }, 2000);
+      open.value = true;
     } else {
       errorEmail.value = "Email đã tồn tại!";
     }
@@ -57,7 +55,6 @@ const clearError = () => {
 </script>
 <template>
   <div class="relative w-full h-screen">
-    <success :text="'Đăng ký thành công'" v-if="success" />
     <div class="absolute modal white-bg py-8 px-10">
       <div class="leading-10 fw-800 fs-36 text-black mb-10">Đăng ký</div>
       <div class="fs-14 leading-5 fw-500 mb-2 text-gray-700">Email <span class="text-red-700">*</span></div>
@@ -74,6 +71,37 @@ const clearError = () => {
       <WebButton :class="{ 'mt-5': errorPassword }" :text="'Đăng ký'" @custom-event="signUp" class="mt-12 mb-8"></WebButton>
       <div class="leading-7 fw-400 fs-16 tẽt-gray-700 text-center">Bạn đã có tài khoản? <a href="dang-nhap" class="text-blue">Đăng nhập</a></div>
     </div>
+    <TransitionRoot as="template" :show="open">
+      <Dialog as="div" class="relative z-10">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter-to="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100 translate-y-0 sm:scale-100"
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <success />
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </div>
 </template>
 <style>

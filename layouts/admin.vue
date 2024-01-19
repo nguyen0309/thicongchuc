@@ -9,10 +9,6 @@ const Menu = ref([
     label: "Người dùng",
   },
   {
-    route: "/admin/tin-tuc",
-    label: "Tin Tức",
-  },
-  {
     route: "/admin/tai-lieu",
     label: "Tài Liệu",
   },

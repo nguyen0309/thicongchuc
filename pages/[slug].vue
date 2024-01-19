@@ -2,35 +2,21 @@
 import { useSlugService } from "@/services/slug";
 import { useExamsService } from "@/services/exams";
 import config from "@/config";
-import AnimationText from "@/components/animation-text.vue";
-import AnimationText2 from "@/components/animation-text-2.vue";
 
 const route = useRoute();
 const router = useRouter();
 const list = ref({});
 const loading = ref(false);
 const type = ref("");
-const post = ref({});
-const listPost = ref([]);
 const listHistory = ref([]);
 
 const getSlug = async () => {
   try {
     loading.value = true;
     const res = await useSlugService().get(route.params.slug);
-    console.log(res);
-    type.value = res.type;
-    if (type.value == "exam") {
-      list.value = res.data;
-      getHistory(route.params.slug);
-      console.log(list.value.title);
-    }
-    if (type.value == "posts") {
-      listPost.value = res.list;
-    }
-    if (type.value == "post") {
-      post.value = res.data;
-    }
+    list.value = res.data;
+    getHistory(route.params.slug);
+    console.log(route.query.type);
     loading.value = false;
   } catch (e) {
     console.log(e);
@@ -65,34 +51,12 @@ onMounted(() => {
   <NuxtLayout>
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
     <div v-else class="wrap-content p-12 white-bg">
-      <div v-if="type == 'exam'">
-        <div v-if="list.is_access_topic">
+      <div>
+        <div class="fs-36 fw-600 text-black-700 mb-8">Trắc nghiệm Kiến thức chung {{ list.title }}</div>
+        <div v-if="(list.is_free && route.query.type == 'free') || !list.is_free">
           <div class="contact cursor-pointer mb-8" @click="generateExam(list.slug.slug)">Vào thi!</div>
-          <div class="fs-30 fw-600 text-black-700 mb-8">Lịch sử những lần thi trước</div>
-          <div class="list-history" v-if="listHistory.length > 0">
-            <div class="block p-6" v-for="i in listHistory" :key="i.id">
-              <div class="flex items-center justify-between mb-4">
-                <div class="label">Kết quả</div>
-                <div class="label" :class="i.score > 5 ? 'text-green' : 'text-red-500'">{{ i.score > 5 ? "Đậu" : "Trượt" }}</div>
-              </div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="label">Điểm</div>
-                <div class="label">{{ i.score }}</div>
-              </div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="label">Số câu làm đúng</div>
-                <div class="label">{{ i.total_correct_answer }}</div>
-              </div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="label">Thời gian làm bài</div>
-                <div class="label">{{ i.total_minute_work }}</div>
-              </div>
-            </div>
-          </div>
-          <div v-else class="fs-20 text-gray-700 fw-400 leading-5">Bạn chưa có lịch sử thi ngành này!</div>
         </div>
-        <div class="block p-6" v-else>
-          <div class="fs-36 fw-600 text-black-700 mb-8">Thi thử trắc nghiệm Kiến thức chung {{ list.title }}</div>
+        <div class="block p-6" v-else-if="list.is_free">
           <div class="fs-18 leading-5 fw-400 text-red-700 alert p-6 flex gap-2 items-center mb-8">
             <img src="@/assets/img/error.png" alt="" />
             Bạn cần được mở khoá để làm đề thi này!
@@ -100,33 +64,28 @@ onMounted(() => {
           <!-- <div class="leading-6 fs-16 fw-700 text-blue underline mb-8">Đăng ký mua đề thi với giá xxx/tháng!</div> -->
           <a :href="`tel:${config.phone}`" class="contact">Liên hệ Zalo: {{ config.phone }}</a>
         </div>
-      </div>
-      <div v-if="type == 'posts'" class="h-full">
-        <div class="featured">
-          <div class="fs-36 fw-600 text-black-700 mb-8">Tổng hợp tin tức</div>
-          <div class="flex flex-col gap-4">
-            <a class="item flex" v-for="i in listPost" :key="i" :href="`/${i.slug.slug}`">
-              <img :src="i.img" :alt="i.title" class="thumb w-full" />
-              <div class="body">
-                <div class="sub-title mb-2 line-clamp-1">
-                  {{ i.title }}
-                </div>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <!-- <img src="@/assets/img/beds.svg" alt="" class="icon" /> -->
-                    <span class="label line-clamp-3">{{ i.description }}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
+        <div class="fs-30 fw-600 text-black-700 mb-8 mt-8">Lịch sử những lần thi trước</div>
+        <div class="list-history" v-if="listHistory.length > 0">
+          <div class="block p-6" v-for="i in listHistory" :key="i.id">
+            <div class="flex items-center justify-between mb-4">
+              <div class="label">Kết quả</div>
+              <div class="label" :class="i.score > 5 ? 'text-green' : 'text-red-500'">{{ i.score > 5 ? "Đậu" : "Trượt" }}</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="label">Điểm</div>
+              <div class="label">{{ i.score }}</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="label">Số câu làm đúng</div>
+              <div class="label">{{ i.total_correct_answer }}</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="label">Thời gian làm bài</div>
+              <div class="label">{{ i.total_minute_work }}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div v-if="type == 'post'" class="wrap-content">
-        <h3 class="fs-28 post-title mb-2">{{ post.title }}</h3>
-        <div class="fs-16 mb-4 text-gray-500 leading-6 fw-500">{{ post.description }}</div>
-        <div class="flex justify-center mb-4"><img :src="post.img" alt="" /></div>
-        <p class="text-black-600 fs-16 leading-6 fw-400">{{ post.content }}</p>
+        <div v-else class="fs-20 text-gray-700 fw-400 leading-5">Bạn chưa có lịch sử thi ngành này!</div>
       </div>
     </div>
   </NuxtLayout>
@@ -202,7 +161,7 @@ onMounted(() => {
 }
 .list-history {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 .block {
@@ -210,6 +169,11 @@ onMounted(() => {
   border-radius: 20px;
   background: var(--white, #fff);
   box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.04), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+@media screen and (max-width: 1080px) {
+  .list-history {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media screen and (max-width: 767px) {
   .list-history {

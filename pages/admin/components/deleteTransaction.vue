@@ -28,7 +28,7 @@ const deleteTransaction = async () => {
       </div>
     </div>
   </div>
-  <div class="flex gap-6 items-center justify-end mt-4">
+  <div class="flex gap-6 items-center justify-end mt-12">
     <div class="cursor-pointer" @click="emit('close')">Cancel</div>
     <button type="button" class="find" @click="deleteTransaction">Xoá</button>
   </div>

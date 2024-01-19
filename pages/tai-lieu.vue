@@ -7,9 +7,11 @@ const search = ref("");
 
 const getList = async () => {
   try {
-    console.log("search.value", search.value);
     loading.value = true;
-    const res = await useMediaService().list({ types: [".doc", ".docx", ".xlxs"] }, search.value);
+    const res = await useMediaService().list(
+      { types: [".doc", ".docx", ".xlsx", "xls", ".pdf", "txt", ".ppt", ".pptx"], ref_type: "topic" },
+      search.value
+    );
     if (res) {
       list.value = res.list;
     }

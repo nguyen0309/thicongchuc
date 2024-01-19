@@ -5,9 +5,9 @@ import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 const props = defineProps(["id"]);
 const emit = defineEmits(["close", "delete-success"]);
 
-const deletePost = async () => {
+const deleteMedia = async () => {
   try {
-    const res = await useAdminService().deletePost(props.id);
+    const res = await useAdminService().deleteMedia(props.id);
     if (res) {
       emit("delete-success");
     }
@@ -21,15 +21,15 @@ const deletePost = async () => {
     <div class="flex items-center gap-4">
       <ExclamationTriangleIcon class="h-8 w-8 text-red-600" aria-hidden="true" />
       <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-        <div as="h3" class="fs-24 font-semibold text-gray-900">Xoá bài viết</div>
+        <div as="h3" class="fs-24 font-semibold text-gray-900">Xoá tài liệu</div>
         <div class="mt-2">
-          <p class="fs-20 text-gray-500">Bạn có chắc chắn muốn xoá bài viết không?</p>
+          <p class="fs-20 text-gray-500">Bạn có chắc chắn muốn xoá tài liệu này không?</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="flex gap-6 items-center justify-end mt-4">
+  <div class="flex gap-6 items-center justify-end mt-12">
     <div class="cursor-pointer" @click="emit('close')">Cancel</div>
-    <button type="button" class="find" @click="deletePost">Xoá</button>
+    <button type="button" class="find" @click="deleteMedia">Xoá</button>
   </div>
 </template>
