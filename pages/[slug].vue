@@ -7,16 +7,21 @@ const route = useRoute();
 const router = useRouter();
 const list = ref({});
 const loading = ref(false);
-const type = ref("");
+const mustLogin = ref(true);
 const listHistory = ref([]);
 
 const getSlug = async () => {
   try {
     loading.value = true;
+    if (process.client && !localStorage.getItem("congchuc24h_token")) {
+      loading.value = false;
+      return;
+    }
+    mustLogin.value = false;
+    loading.value = true;
     const res = await useSlugService().get(route.params.slug);
     list.value = res.data;
     getHistory(route.params.slug);
-    console.log(route.query.type);
     loading.value = false;
   } catch (e) {
     console.log(e);
@@ -50,8 +55,9 @@ onMounted(() => {
 <template>
   <NuxtLayout>
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
-    <div v-else class="wrap-content p-12 white-bg">
-      <div>
+    <div v-else class="wrap-content p-12">
+      <div v-if="mustLogin" class="wrap-content p-12 fs-36 fw-600 text-black-700 mb-8">Bạn cần đăng nhập để thực hiện chức năng này!</div>
+      <div v-else>
         <div class="fs-36 fw-600 text-black-700 mb-8">Trắc nghiệm Kiến thức chung {{ list.title }}</div>
         <div v-if="(list.is_free && route.query.type == 'free') || !list.is_free">
           <div class="contact cursor-pointer mb-8" @click="generateExam(list.slug.slug)">Vào thi!</div>
@@ -61,7 +67,6 @@ onMounted(() => {
             <img src="@/assets/img/error.png" alt="" />
             Bạn cần được mở khoá để làm đề thi này!
           </div>
-          <!-- <div class="leading-6 fs-16 fw-700 text-blue underline mb-8">Đăng ký mua đề thi với giá xxx/tháng!</div> -->
           <a :href="`tel:${config.phone}`" class="contact">Liên hệ Zalo: {{ config.phone }}</a>
         </div>
         <div class="fs-30 fw-600 text-black-700 mb-8 mt-8">Lịch sử những lần thi trước</div>
@@ -92,8 +97,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.wrap-content {
-}
 .block {
   height: max-content;
   border-radius: 20px;

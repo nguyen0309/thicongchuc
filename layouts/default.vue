@@ -19,11 +19,11 @@ const hideMenu = (index) => {
   if (index == 1)
     setTimeout(() => {
       showMenu.value = false;
-    }, 1000);
+    }, 500);
   if (index == 2)
     setTimeout(() => {
       showMenu2.value = false;
-    }, 1000);
+    }, 500);
 };
 const getUser = async () => {
   try {
@@ -84,11 +84,12 @@ onMounted(() => {
                 <a href="/ngan-hang-nha-nuoc" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
                 <a href="/thong-ke" class="p-4 cursor-pointer menu-title">Thống kê</a>
                 <a href="/thue" class="p-4 cursor-pointer menu-title">Thuế</a>
+                <a href="/quan-ly-thi-truong" class="p-4 cursor-pointer menu-title">Quản lý thị trường</a>
                 <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
               <img class="w-4 h-4" src="@/assets/img/arrow-down.png" alt="" />
             </li>
-            <li class="flex items-center pr-3"><a class="title" href="tai-lieu">Tài liệu ôn thi</a></li>
+            <li class="flex items-center pr-3"><a class="title" href="tai-lieu">Danh mục ôn thi</a></li>
             <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
             <li class="flex items-center pr-3"><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
             <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
@@ -100,6 +101,7 @@ onMounted(() => {
                 <a href="/ngan-hang-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
                 <a href="/thong-ke?type=free" class="p-4 cursor-pointer menu-title">Thống kê</a>
                 <a href="/thue?type=free" class="p-4 cursor-pointer menu-title">Thuế</a>
+                <a href="/quan-ly-thi-truong?type=free" class="p-4 cursor-pointer menu-title">Quản lý thị trường</a>
                 <a href="/tieng-anh?type=free" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
               </div>
               <img class="w-4 h-4" src="@/assets/img/arrow-down.png" alt="" />
@@ -107,7 +109,7 @@ onMounted(() => {
             <!-- <li class="flex items-center pr-3"><a class="title" href="thi-thu">Vào thi thử</a></li> -->
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
-            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="admin" class="cursor-pointer text-white">[Quản lý]</a></span
+            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="/admin" class="cursor-pointer text-white">[Quản lý]</a></span
             ><span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
           </div>
           <div v-else class="actions">
@@ -138,10 +140,11 @@ onMounted(() => {
               <a href="/ngan-hang-nha-nuoc" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
               <a href="/thong-ke" class="p-4 cursor-pointer menu-title">Thống kê</a>
               <a href="/thue" class="p-4 cursor-pointer menu-title">Thuế</a>
+              <a href="/quan-ly-thi-truong" class="p-4 cursor-pointer menu-title">Quản lý thị trường</a>
               <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <li><a class="title" href="tai-lieu">Tài liệu</a></li>
+          <li><a class="title" href="tai-lieu">Danh mục ôn thi</a></li>
           <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
           <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
           <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
@@ -153,13 +156,14 @@ onMounted(() => {
               <a href="/ngan-hang-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
               <a href="/thong-ke?type=free" class="p-4 cursor-pointer menu-title">Thống kê</a>
               <a href="/thue?type=free" class="p-4 cursor-pointer menu-title">Thuế</a>
+              <a href="/quan-ly-thi-truong?type=free" class="p-4 cursor-pointer menu-title">Quản lý thị trường</a>
               <a href="/tieng-anh?type=free" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
           <!-- <li><a class="title" href="thi-thu">Vào thi thử</a></li> -->
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
-            <li v-if="user.role == 'admin'"><a href="admin" class="title">Quản lý</a></li>
+            <li v-if="user.role == 'admin'"><a href="/admin" class="title">Quản lý</a></li>
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
           </div>
           <div v-else>
@@ -222,7 +226,7 @@ onMounted(() => {
   margin-right: auto;
 }
 .h-content {
-  height: calc(100% - 65px);
+  height: calc(100% - 57px);
   overflow-y: auto;
   background: #fff;
 }

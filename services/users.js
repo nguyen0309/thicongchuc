@@ -6,8 +6,8 @@ export function useUsersService() {
       return res;
     });
   };
-  const listRank = async () => {
-    return api.fetch(`list-rank`, {}, "post").then((res) => {
+  const listRank = async (page, limit) => {
+    return api.fetch(`list-rank`, { page, limit }, "post").then((res) => {
       return res;
     });
   };

@@ -6,13 +6,15 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/vue/20/solid";
 const category = ref({});
 const listCategories = ref([]);
 
+const props = defineProps(["removeId"]);
 const emit = defineEmits(["category"]);
 
 const getCategories = async () => {
   try {
     const res = await useCatgoriesService().list({ types: ["exam"] });
     if (res) {
-      listCategories.value = res.list;
+      listCategories.value = res.list.filter((item) => item.slug_id !== props.removeId);
+      category.value = listCategories.value[1]
     }
   } catch (e) {
     console.log(e);
@@ -43,7 +45,7 @@ onMounted(() => {
         >
           <ListboxOption as="template" v-for="i in listCategories" :key="i.slug_id" :value="i" v-slot="{ active, selected }">
             <div :class="[active ? 'gray-bg select-text' : 'unselect-text', 'relative cursor-pointer select-none py-4 pl-3 pr-9']">
-              <span class="fs-18 leading-5" :class="[selected ? 'font-semibold' : 'font-normal', 'block']">{{ i.title }}</span>
+              <span class="fs-16 leading-5" :class="[selected ? 'font-semibold' : 'font-normal', 'block']">{{ i.title }}</span>
               <span v-if="category" :class="[active ? 'select-text' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
               </span>
             </div>

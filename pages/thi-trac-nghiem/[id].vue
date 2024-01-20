@@ -102,7 +102,7 @@ onMounted(() => {
     <ClientOnly>
       <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
       <div v-else class="wrap-content h-full p-12">
-        <div class="flex gap-5 md:flex-row sm:flex-col">
+        <div class="flex gap-5 md:items-start md:flex-row sm:flex-col">
           <div class="flex md:flex-col md:w-max sm:flex-row md:items-center sm:justify-center">
             <div
               class="flex justify-center items-center opacity-50 mb-1 w-max"

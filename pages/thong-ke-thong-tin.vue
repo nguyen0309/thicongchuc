@@ -9,7 +9,7 @@ const listHistory = ref([]);
 const getListRank = async () => {
   try {
     loading.value = true;
-    const res = await useUsersService().listRank();
+    const res = await useUsersService().listRank(1, 10);
     if (res) {
       listRank.value = res.list;
     }
@@ -30,7 +30,9 @@ const getHistory = async () => {
 };
 onMounted(() => {
   getListRank();
-  getHistory();
+  if (process.client && localStorage.getItem("congchuc24h_token")) {
+    getHistory();
+  }
 });
 </script>
 
@@ -58,7 +60,7 @@ onMounted(() => {
               </tr>
             </table>
           </div>
-          <div class="content">
+          <div class="content" v-if="listHistory.length > 0">
             <h2 class="fs-30 fw-600 text-black-700 mb-8">Thành tích cá nhân</h2>
             <table>
               <tr>
