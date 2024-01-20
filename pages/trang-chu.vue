@@ -139,7 +139,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div id="features" class="featured">
+      <!-- <div id="features" class="featured">
         <ClientOnly>
           <div class="content">
             <header class="flex items-center justify-between mb-8">
@@ -163,7 +163,7 @@ onMounted(() => {
             </table>
           </div>
         </ClientOnly>
-      </div>
+      </div> -->
       <!-- <div id="resources" class="stats px-12 py-150">
         <div class="content z-10">
           <div class="row row-qty" id="list-counter">

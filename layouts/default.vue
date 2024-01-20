@@ -91,7 +91,7 @@ onMounted(() => {
             </li>
             <li class="flex items-center pr-3"><a class="title" href="tai-lieu">Danh mục ôn thi</a></li>
             <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
-            <li class="flex items-center pr-3"><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
+            <!-- <li class="flex items-center pr-3"><a class="title" href="thong-ke-thong-tin">Thống kê</a></li> -->
             <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
               <a class="title">Thi thử</a>
               <div class="block-menu flex flex-col" v-if="showMenu2">
@@ -144,9 +144,9 @@ onMounted(() => {
               <a href="/tieng-anh" class="p-4 cursor-pointer menu-title">Tiếng anh</a>
             </div>
           </li>
-          <li><a class="title" href="tai-lieu">Danh mục ôn thi</a></li>
+          <li><a class="title" href="/tai-lieu">Danh mục ôn thi</a></li>
           <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
-          <li><a class="title" href="thong-ke-thong-tin">Thống kê</a></li>
+          <!-- <li><a class="title" href="/thong-ke-thong-tin">Thống kê</a></li> -->
           <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
             <a class="title">Thi thử</a>
             <div class="block-menu flex flex-col" v-if="showMenu2">
