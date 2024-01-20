@@ -183,7 +183,7 @@ onMounted(() => {
         </div>
       </div> -->
     </main>
-    <Footer></Footer>
+    <Footer class="mt-12"></Footer>
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="relative z-10" @close="open = false">
         <TransitionChild
