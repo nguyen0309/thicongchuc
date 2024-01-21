@@ -41,7 +41,7 @@ const getUser = async () => {
 const logout = async () => {
   try {
     await useAuthService().logout();
-    location.href = "/"
+    location.href = "/";
   } catch (e) {
     console.log(e);
   }
@@ -109,7 +109,10 @@ onMounted(() => {
             <!-- <li class="flex items-center pr-3"><a class="title" href="thi-thu">Vào thi thử</a></li> -->
           </ul>
           <div class="user-name" v-if="Object.keys(user).length > 0 && user.name">
-            Xin chào, {{ user.name }}!<span v-if="user.role == 'admin'"><a href="/admin" class="cursor-pointer text-white">[Quản lý]</a></span
+            Xin chào, {{ user.name }}!
+            <span>
+              <a v-if="user.role == 'admin'" href="/admin" class="cursor-pointer text-white">[Quản lý]</a>
+              <a v-if="user.role !== 'admin'" href="/doi-mat-khau" class="cursor-pointer text-white">[Đổi mât khẩu]</a></span
             ><span class="cursor-pointer text-blue" @click="logout">[Đăng xuất]</span>
           </div>
           <div v-else class="actions">

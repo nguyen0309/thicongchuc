@@ -26,20 +26,11 @@ export function useAuthService() {
       });
   };
 
-  const reset = async (account, token) => {
+  const changePassword = async (old_password, new_password) => {
     return api
-      .fetch("dealership/passwords/reset", {
-        account,
-        token,
-      })
-      .then((res) => {
-        return res;
-      });
-  };
-  const forgot = async (email) => {
-    return api
-      .fetch("dealership/passwords/forgot", {
-        email,
+      .fetch("user/change-password", {
+        old_password,
+        new_password,
       })
       .then((res) => {
         return res;
@@ -52,8 +43,7 @@ export function useAuthService() {
   return {
     signUp,
     signIn,
-    reset,
-    forgot,
+    changePassword,
     logout,
   };
 }
