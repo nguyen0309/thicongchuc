@@ -5,7 +5,6 @@
   margin: 0;
   position: relative;
   font-weight: normal;
-  user-select: none;
 }
 :root {
   --primary-color: #0f1b4c;

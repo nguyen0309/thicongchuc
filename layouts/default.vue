@@ -46,13 +46,24 @@ const logout = async () => {
     console.log(e);
   }
 };
+if (process.client) {
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+      alert("Developer tools are disabled on this website.");
+      e.preventDefault();
+    }
+  });
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
+}
 onMounted(() => {
   if (process.client && localStorage.getItem("congchuc24h_token")) getUser();
 });
 </script>
 <template>
   <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
-  <div v-else class="relative h-screen">
+  <div v-else class="relative h-screen wrap-page">
     <div @click="open = true" class="icon-zalo">
       <img class="w-full h-full" src="@/assets/img/zalo.svg" alt="" />
     </div>
@@ -219,6 +230,9 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss" scoped>
+.wrap-page {
+  user-select: none;
+}
 .contact-zalo {
   width: 300px;
 }
