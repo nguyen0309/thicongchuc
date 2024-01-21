@@ -31,7 +31,6 @@ const getListMedia = async () => {
 };
 
 const confirmDeleteTransaction = (value) => {
-  console.log("id", value);
   id.value = value;
   openDelete.value = true;
 };

@@ -9,7 +9,6 @@ const emit = defineEmits(["close", "add-success"]);
 
 const getCategory = (value) => {
   category.value = value;
-  console.log('category.value', category.value)
 };
 
 const getFileName = (event) => {

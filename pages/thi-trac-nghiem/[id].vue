@@ -31,7 +31,7 @@ const startExam = async (id) => {
       topic.value = res.topic.slug_id;
       updateCountdown(60, 0);
     }
-    loading.value = false;
+    if (res.success == false) loading.value = false;
   } catch (e) {
     console.log(e);
   }

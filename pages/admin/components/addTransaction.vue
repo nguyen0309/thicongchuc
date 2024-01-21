@@ -1,8 +1,7 @@
 <script setup>
 import { useAdminService } from "@/services/admin";
 const category = ref([]);
-
-const props = defineProps(["id", "listCategories"]);
+const props = defineProps(["id", "listTopic"]);
 const emit = defineEmits(["close", "add-success"]);
 
 const createTransaction = async (user_id) => {
@@ -15,9 +14,6 @@ const createTransaction = async (user_id) => {
     console.log(e);
   }
 };
-watch(category, () => {
-  console.log(category.value);
-});
 </script>
 <template>
   <div class="sm:flex sm:items-start">
@@ -25,12 +21,12 @@ watch(category, () => {
       <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
         <div as="h3" class="fs-24 font-semibold text-gray-900">Mở ngành học</div>
         <div class="mt-6">
-          <div class="relative flex items-start" v-for="(i, index) in props.listCategories" :key="i">
+          <div class="relative flex items-start" v-for="(i, index) in props.listTopic" :key="i">
             <div class="flex h-6 items-center mb-3 gap-2">
               <input
                 v-model="category"
                 :id="'comments' + index"
-                :value="i.slug_id"
+                :value="i.id"
                 :name="'comments' + index"
                 type="checkbox"
                 class="h-6 w-6 cursor-pointer"

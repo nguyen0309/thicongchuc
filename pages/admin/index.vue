@@ -3,10 +3,12 @@ import { useAdminService } from "@/services/admin";
 import { useCatgoriesService } from "@/services/categories";
 import Success from "@/components/success.vue";
 import AddTransaction from "@/pages/admin/components/addTransaction.vue";
+import ChangePassword from "@/pages/admin/components/changePassword.vue";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 
 const list = ref([]);
 const search = ref("");
+const propsList = ref([]);
 const listCategories = ref([]);
 const openSuccess = ref(false);
 const limit = ref(10);
@@ -14,6 +16,7 @@ const page = ref(1);
 const total = ref(0);
 const id = ref(null);
 const open = ref(false);
+const openChange = ref(false);
 
 const getListUser = async () => {
   try {
@@ -36,13 +39,31 @@ const getCategories = async () => {
     console.log(e);
   }
 };
-const createTransaction = (value) => {
+const createTransaction = (value, listTopic) => {
+  listTopic = listTopic.map((i) => i.topic.id);
+  propsList.value = listCategories.value.filter((i) => !listTopic.includes(i.id));
   id.value = value;
   open.value = true;
 };
+
 const addSuccess = () => {
   openSuccess.value = true;
   open.value = false;
+  getListUser();
+  setTimeout(() => {
+    openSuccess.value = false;
+  }, 2000);
+};
+const changeUserPassword = (value) => {
+  id.value = value;
+  openChange.value = true;
+};
+const changeSuccess = () => {
+  openSuccess.value = true;
+  openChange.value = false;
+  setTimeout(() => {
+    openSuccess.value = false;
+  }, 2000);
 };
 const formatDate = (value) => {
   const timestamp = value;
@@ -54,11 +75,10 @@ const formatDate = (value) => {
   const year = date.getUTCFullYear();
   const month = date.getUTCMonth() + 1; // Months are zero-indexed, so add 1
   const day = date.getUTCDate();
-  const hours = date.getUTCHours();
+  const hours = date.getUTCHours() + 7;
   const minutes = date.getUTCMinutes();
   const seconds = date.getUTCSeconds();
   const milliseconds = date.getUTCMilliseconds();
-
   // Format components as needed (add leading zeros if necessary)
   const formattedDate = `${String(day).padStart(2, "0")}-${String(month).padStart(2, "0")}-${year}`;
   const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
@@ -105,7 +125,8 @@ onMounted(() => {
             </td>
             <td>{{ formatDate(i.created_at) }}</td>
             <td>
-              <div @click="createTransaction(i.id)" class="text-blue cursor-pointer">Mở Thi Trắc Nghiệm</div>
+              <div @click="changeUserPassword(i.id)" class="text-blue cursor-pointer mb-3">Đổi mật khẩu</div>
+              <div @click="createTransaction(i.id, i.transactions)" class="text-blue cursor-pointer">Mở Thi Trắc Nghiệm</div>
             </td>
           </tr>
         </table>
@@ -140,7 +161,40 @@ onMounted(() => {
                 leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-8 text-left shadow-xl transition-all mw-640 w-1/2">
-                  <add-transaction @close="open = false" @add-success="addSuccess" :listCategories="listCategories" :id="id" />
+                  <add-transaction @close="open = false" @add-success="addSuccess" :listTopic="propsList" :id="id" />
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </Dialog>
+      </TransitionRoot>
+      <TransitionRoot as="template" :show="openChange">
+        <Dialog as="div" class="relative z-10" @close="openChange = false">
+          <TransitionChild
+            as="template"
+            enter="ease-out duration-300"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="ease-in duration-200"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </TransitionChild>
+
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <TransitionChild
+                as="template"
+                enter="ease-out duration-300"
+                enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enter-to="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leave-from="opacity-100 translate-y-0 sm:scale-100"
+                leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white p-8 text-left shadow-xl transition-all mw-640 w-1/2">
+                  <change-password @close="openChange = false" @change-success="changeSuccess" :id="id" />
                 </DialogPanel>
               </TransitionChild>
             </div>

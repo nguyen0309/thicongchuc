@@ -22,7 +22,7 @@ const getUser = async () => {
   try {
     const res = await useUsersService().get();
     if (res) {
-      if (route.name.includes("admin") && res.role != "admin") router.push("/trang-chu");
+      if (route.name.includes("admin") && res.role != "admin") router.push("/");
     }
   } catch (e) {
     console.log(e);

@@ -31,7 +31,7 @@ const getUser = async () => {
     const res = await useUsersService().get();
     if (res) {
       user.value = res;
-      if (route.name.includes("admin") && user.value.role != "admin") router.push("/trang-chu");
+      if (route.name.includes("admin") && user.value.role != "admin") router.push("/");
     }
     loading.value = false;
   } catch (e) {
@@ -41,7 +41,7 @@ const getUser = async () => {
 const logout = async () => {
   try {
     await useAuthService().logout();
-    router.push("/");
+    location.href = "/"
   } catch (e) {
     console.log(e);
   }
@@ -70,11 +70,11 @@ onMounted(() => {
             </label>
             <div class="fs-20 fw-500 text-white web-name">Thicongchuc24h</div>
           </div>
-          <a href="trang-chu">
+          <a href="/">
             <div class="logo"><img class="w-full h-full" src="@/assets/img/logo.png" alt="" /></div>
           </a>
           <ul id="pc-nav">
-            <li class="flex items-center pr-3"><a class="title" href="/trang-chu">Trang chủ</a></li>
+            <li class="flex items-center pr-3"><a class="title" href="/">Trang chủ</a></li>
             <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(1)" @mouseover="hoverShowMenu(1)">
               <a class="title">Thi kiến thức chung</a>
               <div class="block-menu flex flex-col" v-if="showMenu">
@@ -123,14 +123,14 @@ onMounted(() => {
       <input type="checkbox" name="" id="menu-checkbox" class="menu-checkbox" hidden />
       <label for="menu-checkbox" class="menu-overlay"></label>
       <div class="menu-drawer">
-        <a href="trang-chu">
+        <a href="/">
           <div class="flex items-center gap-2">
             <div class="logo"><img class="w-auto h-full" src="@/assets/img/logo.png" alt="" /></div>
             <div class="fs-20 fw-500">Thicongchuc24h</div>
           </div>
         </a>
         <ul id="mobile-nav">
-          <li><a class="title" href="/trang-chu">Trang chủ</a></li>
+          <li><a class="title" href="/">Trang chủ</a></li>
           <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(1)" @mouseover="hoverShowMenu(1)">
             <a class="title">Thi kiến thức chung</a>
             <div class="block-menu flex flex-col" v-if="showMenu">

@@ -6,6 +6,11 @@ export function useAdminService() {
       return res;
     });
   };
+  const adminChangePassword = async (id, password) => {
+    return api.fetch(`admin/user/update-password/${id}`, { password }).then((res) => {
+      return res;
+    });
+  };
   const listTransaction = async (filter, limit, page, search) => {
     return api.fetch(`admin/transaction/list`, { filter, limit, page, search }).then((res) => {
       return res;
@@ -38,6 +43,7 @@ export function useAdminService() {
     listMedia,
     createTransaction,
     deleteTransaction,
-    deleteMedia
+    deleteMedia,
+    adminChangePassword,
   };
 }

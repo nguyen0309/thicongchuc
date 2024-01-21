@@ -29,10 +29,10 @@ const signIn = async () => {
 
     const res = await useAuthService().signIn(email.value, password.value);
     if (res.data) {
-      router.push("/trang-chu");
+      router.push("/");
     } else {
       error.value = "Email hoặc mật khẩu không đúng";
-      setTimeout(() => error.value = "", 3000);
+      setTimeout(() => (error.value = ""), 3000);
     }
   } catch (e) {
     console.log(e);

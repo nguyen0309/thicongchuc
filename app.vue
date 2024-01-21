@@ -9,6 +9,17 @@ useServerSeoMeta({
   keyword: "Thi công chức, Công chức, Viên chức, Ôn thi, Thi công chức 24h",
   ogImage: "http://api-dev.thicongchuc24h.com/static/files-1705157852717-288670294logo.png",
 });
+if (process.client) {
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+      alert("Developer tools are disabled on this website.");
+      e.preventDefault();
+    }
+  });
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
+}
 </script>
 
 <template>
