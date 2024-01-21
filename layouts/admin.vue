@@ -57,7 +57,7 @@ onMounted(() => {
   overflow: hidden;
 }
 .menu {
-  width: 256px;
+  width: 145px;
   background: var(--white, #fff);
 }
 .logo {

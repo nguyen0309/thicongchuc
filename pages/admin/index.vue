@@ -44,6 +44,26 @@ const addSuccess = () => {
   openSuccess.value = true;
   open.value = false;
 };
+const formatDate = (value) => {
+  const timestamp = value;
+
+  // Create a Date object from the timestamp
+  const date = new Date(timestamp);
+
+  // Extract components
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth() + 1; // Months are zero-indexed, so add 1
+  const day = date.getUTCDate();
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const seconds = date.getUTCSeconds();
+  const milliseconds = date.getUTCMilliseconds();
+
+  // Format components as needed (add leading zeros if necessary)
+  const formattedDate = `${String(day).padStart(2, "0")}-${String(month).padStart(2, "0")}-${year}`;
+  const formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return formattedTime + " " + formattedDate;
+};
 watch(page, () => {
   getListUser();
 });
@@ -72,12 +92,18 @@ onMounted(() => {
             <th>STT</th>
             <th>Email</th>
             <th>Tên Người Dùng</th>
+            <th>Ngành đã mở</th>
+            <th>Ngày đăng mở khoá</th>
             <th></th>
           </tr>
           <tr v-for="(i, index) in list" :key="index">
             <td>{{ index + 1 }}</td>
             <td>{{ i.email }}</td>
             <td>{{ i.name }}</td>
+            <td>
+              <div class="mb-1" v-for="transaction in i.transactions" :key="transaction.id">+ {{ transaction.topic.title }}</div>
+            </td>
+            <td>{{ formatDate(i.created_at) }}</td>
             <td>
               <div @click="createTransaction(i.id)" class="text-blue cursor-pointer">Mở Thi Trắc Nghiệm</div>
             </td>
