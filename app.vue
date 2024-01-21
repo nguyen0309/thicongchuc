@@ -1,12 +1,12 @@
 <script setup>
 useServerSeoMeta({
-  title: "Thicongchuc24h",
-  ogTitle: "Thicongchuc24h",
+  title: "Thi Công Chức 24h",
+  ogTitle: "Thi Công Chức 24h",
   description:
     "Thi công chức 24h cung cấp tài liệu, thi thử, viên chức ngành dọc của Tổng cục Thuế, Kho bạc Nhà nước, Tổng cục Hải quan, Tổng cục Thống kê,... chất lượng hàng đầu Viêt Nam",
   ogDescription:
     "Thi công chức 24h cung cấp tài liệu, thi thử, viên chức ngành dọc của Tổng cục Thuế, Kho bạc Nhà nước, Tổng cục Hải quan, Tổng cục Thống kê,... chất lượng hàng đầu Viêt Nam",
-  keyword: "Công chức, Ôn thi, Thi công chức 24h",
+  keyword: "Thi công chức, Công chức, Viên chức, Ôn thi, Thi công chức 24h",
   ogImage: "http://api-dev.thicongchuc24h.com/static/files-1705157852717-288670294logo.png",
 });
 </script>
