@@ -178,6 +178,7 @@ onMounted(() => {
           <div v-if="Object.keys(user).length > 0 && user.name">
             <div class="user-name separate py-6">Xin chào, {{ user.name }}!</div>
             <li v-if="user.role == 'admin'"><a href="/admin" class="title">Quản lý</a></li>
+            <li v-if="user.role !== 'admin'"><a href="/doi-mat-khau" class="title">Đổi mật khẩu</a></li>
             <div class="cursor-pointer py-6" @click="logout">Đăng xuất</div>
           </div>
           <div v-else>
