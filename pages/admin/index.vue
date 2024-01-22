@@ -71,11 +71,13 @@ const formatDate = (value) => {
   // Create a Date object from the timestamp
   const date = new Date(timestamp);
 
+  date.setUTCHours(date.getUTCHours() + 7);
+
   // Extract components
   const year = date.getUTCFullYear();
   const month = date.getUTCMonth() + 1; // Months are zero-indexed, so add 1
   const day = date.getUTCDate();
-  const hours = date.getUTCHours() + 7;
+  const hours = date.getUTCHours();
   const minutes = date.getUTCMinutes();
   const seconds = date.getUTCSeconds();
   const milliseconds = date.getUTCMilliseconds();
