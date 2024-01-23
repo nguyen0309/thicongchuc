@@ -47,15 +47,15 @@ const logout = async () => {
   }
 };
 if (process.client) {
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-      alert("Developer tools are disabled on this website.");
-      e.preventDefault();
-    }
-  });
-  document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-  });
+  // document.addEventListener("keydown", function (e) {
+  //   if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+  //     alert("Developer tools are disabled on this website.");
+  //     e.preventDefault();
+  //   }
+  // });
+  // document.addEventListener("contextmenu", function (e) {
+  //   e.preventDefault();
+  // });
 }
 onMounted(() => {
   if (process.client && localStorage.getItem("congchuc24h_token")) getUser();

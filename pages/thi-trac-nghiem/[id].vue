@@ -31,7 +31,8 @@ const startExam = async (id) => {
       topic.value = res.topic.slug_id;
       updateCountdown(60, 0);
     }
-    if (res.success == false) loading.value = false;
+    if (res.success == false) location.href("/");
+    loading.value = false;
   } catch (e) {
     console.log(e);
   }
