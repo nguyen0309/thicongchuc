@@ -104,7 +104,7 @@ onMounted(() => {
             <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
             <!-- <li class="flex items-center pr-3"><a class="title" href="thong-ke-thong-tin">Thống kê</a></li> -->
             <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
-              <a class="title">Thi thử</a>
+              <a class="title">Thi thử miễn phí</a>
               <div class="block-menu flex flex-col" v-if="showMenu2">
                 <a href="/bao-hiem-xa-hoi?type=free" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
                 <a href="/hai-quan?type=free" class="p-4 cursor-pointer menu-title">Hải quan</a>
@@ -162,7 +162,7 @@ onMounted(() => {
           <!-- <li><a class="title" href="tin-tuc">Tin tức</a></li> -->
           <!-- <li><a class="title" href="/thong-ke-thong-tin">Thống kê</a></li> -->
           <li class="relative flex items-center gap-2 cursor-pointer pr-3" @mouseleave="hideMenu(2)" @mouseover="hoverShowMenu(2)">
-            <a class="title">Thi thử</a>
+            <a class="title">Thi thử miễn phí</a>
             <div class="block-menu flex flex-col" v-if="showMenu2">
               <a href="/bao-hiem-xa-hoi?type=free" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
               <a href="/hai-quan?type=free" class="p-4 cursor-pointer menu-title">Hải quan</a>
