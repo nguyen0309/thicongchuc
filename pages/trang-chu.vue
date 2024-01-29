@@ -84,7 +84,7 @@ onMounted(() => {
             Ngân hàng tài liệu ôn thi công chức chất lượng được soạn thảo, tuyển chọn, rà soát kỹ lưỡng đảm bảo cung cấp kiến thức đầy đủ phục vụ kỳ
             thi.
           </div>
-          <div class="fs-18">Liên hệ: {{ config.phone }}</div>
+          <div class="fs-18">Liên hệ Zalo: {{ config.phone }}</div>
         </div>
       </div>
       <div id="features" class="featured">
