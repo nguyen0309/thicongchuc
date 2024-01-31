@@ -79,10 +79,10 @@ onMounted(() => {
     <main>
       <div class="dao-ly stats book p-12 text-white fs-36 text-left h-screen relative">
         <div class="absolute center-div container">
-          <div class="fs-50 mb-8">Hệ thống kiến thức, ôn thi trắc nghiệm công chức trên nền tảng trực tuyến.</div>
+          <div class="fs-50 mb-8">Hệ thống kiến thức, ôn thi trắc nghiệm công chức trên nền tảng trực tuyến</div>
           <div class="fs-20 mb-8">
             Ngân hàng tài liệu ôn thi công chức chất lượng được soạn thảo, tuyển chọn, rà soát kỹ lưỡng đảm bảo cung cấp kiến thức đầy đủ phục vụ kỳ
-            thi.
+            thi
           </div>
           <div class="fs-18">Liên hệ Zalo: {{ config.phone }}</div>
         </div>
