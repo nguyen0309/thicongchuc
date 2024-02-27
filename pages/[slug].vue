@@ -47,6 +47,17 @@ const generateExam = async (slug) => {
     console.log(e);
   }
 };
+const generateFreeExam = async (slug) => {
+  try {
+    const res = await useExamsService().generateFree(slug);
+    if (res.exam) {
+      router.push(`/thi-trac-nghiem/${res.exam.id}?type=free`);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+console.log(route);
 onMounted(() => {
   getSlug();
 });
@@ -56,7 +67,13 @@ onMounted(() => {
   <NuxtLayout>
     <div v-if="loading" class="h-full flex items-center justify-center"><div class="loader"></div></div>
     <div v-else class="wrap-content p-12">
-      <div v-if="mustLogin" class="wrap-content p-12 fs-36 fw-600 text-black-700 mb-8">Bạn cần đăng nhập để thực hiện chức năng này!</div>
+      <div v-if="mustLogin && route.query.type == 'free'" class="wrap-content">
+        <div class="fs-36 fw-600 text-black-700 mb-8">Trắc nghiệm Kiến thức chung miễn phí!</div>
+        <div>
+          <div class="contact cursor-pointer mb-8" @click="generateFreeExam(route.params.slug)">Vào thi!</div>
+        </div>
+      </div>
+      <div v-else-if="mustLogin" class="wrap-content p-12 fs-36 fw-600 text-black-700 mb-8">Bạn cần đăng nhập để thực hiện chức năng này!</div>
       <div v-else>
         <div class="fs-36 fw-600 text-black-700 mb-8">Trắc nghiệm Kiến thức chung {{ list.title }}</div>
         <div v-if="(list.is_free && route.query.type == 'free') || !list.is_free">

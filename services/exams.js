@@ -6,6 +6,11 @@ export function useExamsService() {
       return res;
     });
   };
+  const generateFree = async (slug) => {
+    return api.fetch(`free/auto-generate/${slug}`).then((res) => {
+      return res;
+    });
+  };
 
   const history = async (slug) => {
     return api.fetch(`exam-history/list-for-topic/${slug}`).then((res) => {
@@ -22,8 +27,18 @@ export function useExamsService() {
       return res;
     });
   };
+  const startFree = async (id, page, limit) => {
+    return api.fetch(`free/${id}/start`, { page, limit }, "post").then((res) => {
+      return res;
+    });
+  };
   const end = async (id, form, limit) => {
     return api.fetch(`exam/${id}/end`, { form, limit }, "post").then((res) => {
+      return res;
+    });
+  };
+  const endFree = async (id, form, limit) => {
+    return api.fetch(`free/${id}/end`, { form, limit }, "post").then((res) => {
       return res;
     });
   };
@@ -32,6 +47,9 @@ export function useExamsService() {
     start,
     end,
     history,
-    historyAll
+    historyAll,
+    startFree,
+    generateFree,
+    endFree
   };
 }

@@ -37,6 +37,22 @@ const startExam = async (id) => {
     console.log(e);
   }
 };
+const startFreeExam = async (id) => {
+  try {
+    loading.value = true;
+    const res = await useExamsService().startFree(id, page.value, 30);
+    if (res.list) {
+      list.value = res.list;
+      total_question.value = res.exam.total_question;
+      topic.value = res.topic.slug_id;
+      updateCountdown(60, 0);
+    }
+    if (res.success == false) location.href("/");
+    loading.value = false;
+  } catch (e) {
+    console.log(e);
+  }
+};
 const endExam = async () => {
   try {
     const res = await useExamsService().end(route.params.id, form.value, 60);
@@ -52,6 +68,28 @@ const endExam = async () => {
   } catch (e) {
     console.log(e);
   }
+};
+
+const endFreeExam = async () => {
+  try {
+    const res = await useExamsService().endFree(route.params.id, form.value, 60);
+    if (res) {
+      answer.value = res.list;
+      point.value = res.history_exam.score;
+      timeWork.value = res.history_exam.total_minute_work;
+      rightAnswer.value = res.list.filter((i) => i.q_correct).length;
+      open.value = true;
+    }
+    examEnd.value = true;
+    page.value = 1;
+  } catch (e) {
+    console.log(e);
+  }
+};
+const clickToEnd = () => {
+  if (process.client && !localStorage.getItem("congchuc24h_token")) {
+    endFreeExam();
+  } else endExam();
 };
 const onChange = (qid, aid) => {
   let newObject = { question_id: qid, answer_id: aid };
@@ -82,7 +120,9 @@ const updateCountdown = (minutes, seconds) => {
       minutes--;
       seconds = 59;
     } else {
-      endExam();
+      if (process.client && !localStorage.getItem("congchuc24h_token")) {
+        endFreeExam();
+      } else endExam();
       return;
     }
   }
@@ -93,8 +133,10 @@ const changeQuestion = (value) => {
 };
 
 onMounted(() => {
+  if (process.client && !localStorage.getItem("congchuc24h_token")) {
+    startFreeExam(route.params.id);
+  } else startExam(route.params.id);
   getCategories();
-  startExam(route.params.id);
 });
 </script>
 
@@ -145,7 +187,7 @@ onMounted(() => {
                   >{{ answer.title }}</label
                 >
               </div>
-              <div v-if="i.recommend" class="fs-14 text-justify italic fw-600 text-black-700 mt-4">Gợi ý: {{ i.recommend }}</div>
+              <div v-if="i.recommend" class="fs-14 text-justify italic fw-600 text-black-700 mt-8 leading-relaxed">Gợi ý: {{ i.recommend }}</div>
             </div>
             <div class="flex flex-wrap justify-start overflow-hidden rounded-xl w-full">
               <div
@@ -189,7 +231,7 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="flex justify-end mt-8"><button class="contact" @click="endExam">Nạp bài</button></div>
+            <div class="flex justify-end mt-8"><button class="contact" @click="clickToEnd">Nạp bài</button></div>
           </div>
         </div>
         <TransitionRoot as="template" :show="open">
