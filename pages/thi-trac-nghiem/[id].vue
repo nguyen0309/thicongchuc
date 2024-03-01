@@ -31,7 +31,7 @@ const startExam = async (id) => {
       topic.value = res.topic.slug_id;
       updateCountdown(60, 0);
     }
-    if (res.success == false) location.href("/");
+    if (res.success == false) router.push("/");
     loading.value = false;
   } catch (e) {
     console.log(e);
@@ -187,7 +187,7 @@ onMounted(() => {
                   >{{ answer.title }}</label
                 >
               </div>
-              <div v-if="i.recommend" class="fs-14 text-justify italic fw-600 text-black-700 mt-8 leading-relaxed">Gợi ý: {{ i.recommend }}</div>
+              <div v-if="i.recommend" class="fs-14 text-justify italic fw-600 text-black-700 mt-8 leading-relaxed whitespace-pre-line">Gợi ý: {{ i.recommend }}</div>
             </div>
             <div class="flex flex-wrap justify-start overflow-hidden rounded-xl w-full">
               <div
