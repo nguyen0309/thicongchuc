@@ -5,7 +5,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 
 const showMenu = ref(false);
 const showMenu2 = ref(false);
-const showMenu3 = ref(true);
+const showMenu3 = ref(false);
 const user = ref({});
 const loading = ref(false);
 const router = useRouter();
@@ -28,7 +28,7 @@ const hideMenu = (index) => {
     }, 500);
   if (index == 3)
     setTimeout(() => {
-      // showMenu3.value = false;
+      showMenu3.value = false;
     }, 500);
 };
 const getUser = async () => {
@@ -53,15 +53,15 @@ const logout = async () => {
   }
 };
 if (process.client) {
-  // document.addEventListener("keydown", function (e) {
-  //   if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-  //     alert("Developer tools are disabled on this website.");
-  //     e.preventDefault();
-  //   }
-  // });
-  // document.addEventListener("contextmenu", function (e) {
-  //   e.preventDefault();
-  // });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+      alert("Developer tools are disabled on this website.");
+      e.preventDefault();
+    }
+  });
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
 }
 onMounted(() => {
   if (process.client && localStorage.getItem("congchuc24h_token")) getUser();
