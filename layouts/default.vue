@@ -5,6 +5,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 
 const showMenu = ref(false);
 const showMenu2 = ref(false);
+const showMenu3 = ref(true);
 const user = ref({});
 const loading = ref(false);
 const router = useRouter();
@@ -14,6 +15,7 @@ const open = ref(false);
 const hoverShowMenu = (index) => {
   if (index == 1) showMenu.value = true;
   if (index == 2) showMenu2.value = true;
+  if (index == 3) showMenu3.value = true;
 };
 const hideMenu = (index) => {
   if (index == 1)
@@ -23,6 +25,10 @@ const hideMenu = (index) => {
   if (index == 2)
     setTimeout(() => {
       showMenu2.value = false;
+    }, 500);
+  if (index == 3)
+    setTimeout(() => {
+      // showMenu3.value = false;
     }, 500);
 };
 const getUser = async () => {
@@ -70,7 +76,7 @@ onMounted(() => {
     <header class="fixed-header">
       <div class="content">
         <nav class="navbar">
-          <div class="flex items-center gap-3">
+          <div class="mobile-navbar flex items-center gap-3 justify-between w-full">
             <label for="menu-checkbox" class="toggle-menu">
               <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                 <path
@@ -79,7 +85,18 @@ onMounted(() => {
                 />
               </svg>
             </label>
-            <div class="fs-20 fw-500 text-white web-name">Thicongchuc24h</div>
+            <div class="fw-500 text-white web-name cursor-pointer test-free" @mouseover="hoverShowMenu(3)">
+              <div class="fs-18">THI THỬ MIỄN PHÍ</div>
+              <div class="block-menu mobile-menu flex flex-col fs-16" v-if="showMenu3" @mouseleave="hideMenu(3)">
+                <a href="/bao-hiem-xa-hoi?type=free" class="p-4 cursor-pointer menu-title">Bảo hiểm xã hội</a>
+                <a href="/hai-quan?type=free" class="p-4 cursor-pointer menu-title">Hải quan</a>
+                <a href="/kho-bac-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Kho bạc nhà nước</a>
+                <a href="/ngan-hang-nha-nuoc?type=free" class="p-4 cursor-pointer menu-title">Ngân hàng nhà nước</a>
+                <a href="/thong-ke?type=free" class="p-4 cursor-pointer menu-title">Thống kê</a>
+                <a href="/thue?type=free" class="p-4 cursor-pointer menu-title">Thuế</a>
+                <a href="/quan-ly-thi-truong?type=free" class="p-4 cursor-pointer menu-title">Quản lý thị trường</a>
+              </div>
+            </div>
           </div>
           <a href="/">
             <div class="logo"><img class="w-full h-full" src="@/assets/img/logo.png" alt="" /></div>
@@ -287,6 +304,9 @@ onMounted(() => {
   padding: 12px 0;
   height: 56px;
 }
+.mobile-navbar {
+  display: none;
+}
 
 .logo {
   height: 56px;
@@ -345,7 +365,7 @@ onMounted(() => {
   position: absolute;
   height: max-content;
   // border-radius: 6px;
-  background: var(--white, #fff7f0);
+  background: #fff7f0;
   width: 200px;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 4px 6px -2px rgba(0, 0, 0, 0.05), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   top: 56px;
@@ -354,6 +374,14 @@ onMounted(() => {
 } /* Tablet */
 .web-name {
   display: none;
+}
+.test-free {
+  display: none;
+}
+.mobile-menu {
+  top: 36px !important;
+  left: -27px !important;
+  color: #333 !important;
 }
 @media screen and (min-width: 1151px) {
   .mobile-header {
@@ -369,8 +397,16 @@ onMounted(() => {
   .navbar {
     position: relative;
   }
-
+  .navbar .user-name {
+    display: none;
+  }
+  .mobile-navbar {
+    display: flex;
+  }
   .web-name {
+    display: block;
+  }
+  .test-free {
     display: block;
   }
 
@@ -480,9 +516,6 @@ onMounted(() => {
 @media screen and (max-width: 600px) {
   .content {
     padding: 0 16px;
-  }
-  .navbar .user-name {
-    display: none;
   }
 }
 
